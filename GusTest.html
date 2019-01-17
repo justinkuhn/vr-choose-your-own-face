@@ -1,0 +1,74 @@
+<html>
+
+<head>
+    <title>GusTest</title>
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+    <!-- REGISTERING A COMPONENT -->
+    <script>
+    AFRAME.registerComponent('tractor-beam', {
+        schema: {
+            target: { type: "selector" }
+        },
+
+        init: function() {
+            
+        },
+
+        update: function(oldData) {
+            this.el.addEventListener("mouseenter", function handler() {
+                let cameraPos = document.querySelector('#camera').getAttribute('position');
+                let cameraString = String(cameraPos.x) + ' ' + String(cameraPos.y) + ' ' + String(cameraPos.z)
+                let animation = document.createElement('a-animation');
+                let animId = 'anim-redBox'
+                animation.setAttribute('id', animId)
+                animation.setAttribute('attribute', 'position');
+                animation.setAttribute('to', cameraString);
+                animation.setAttribute('dur', '1000');
+                animation.setAttribute('fill', 'forwards');
+                this.data.target.appendChild(animation)
+                this.el.removeEventListener('mouseenter', handler)
+            }.bind(this));
+
+            this.el.addEventListener('mouseleave', function handlerExit() {
+              this.el.removeEventListener('mouseleave', handlerExit)
+              let animation = document.querySelector('#anim-redBox')
+              this.data.target.removeChild(animation)
+            }.bind(this))
+        }
+    })
+    </script>
+</head>
+
+<body>
+    <a-scene raycaster="far: 100; objects: [link];" cursor="rayOrigin: mouse" camera-position onmousedown="mouseNotClicked = false;" light="defaultLightsEnabled: true;">
+        <a-assets>
+        </a-assets>
+        <!-- CAMERA -->
+        <a-camera id='camera' position="0 1.6 0" universal-controls>
+            <a-cursor />
+        </a-camera>
+        <a-entity environment="skyType: gradient; 
+                               grid: none;
+                               skyColor: #eeeeee;
+                               horizonColor: #440000;
+                               dressingScale: 3;
+                               dressing: trees;
+                               dressingColor: #ff6538;
+                               dressingAmount: 250;
+                               groundColor: #0d4838;
+                               groundColor2: #0d4838;
+                               shadow: true;
+                               ground: hills;
+                               groundYScale: 2;
+                               playArea: 0.2">
+        </a-entity>
+        <a-text value="Welcome to Gus Test!" position="0 1 -3" align="center" scale="4 4 4 "></a-text>
+        <a-entity id='lol'>
+            <a-entity id='redBox' position="3 2 0" geometry="primitive: box" material="color: red" light="type: point; intensity: 0.5" tractor-beam="target:#redBox;">
+                <!--<a-animation attribute="rotation" dur="10000" fill="forwards" to="0 360 0" repeat="indefinite" /> -->
+            </a-entity>
+        </a-entity>
+    </a-scene>
+</body>
+</html>

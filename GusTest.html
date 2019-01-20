@@ -6,28 +6,39 @@
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
     <!-- REGISTERING A COMPONENT -->
     <script>
+    const cameraPosition = {x: 0, y: 1.6, z: 0}
+
     AFRAME.registerComponent('tractor-beam', {
-        schema: {
-            // target: { type: "selector" }
+        schema: {},
+
+        setRotation: function(el) {
+          let elPos = el.getAttribute('position')
+          let cpv = new THREE.Vector3(cameraPosition.x, cameraPosition.y, cameraPosition.z, 'XYZ')
+          let epv = new THREE.Vector3(elPos.x, elPos.y, elPos.z, 'XYZ')
+          let dv = epv.sub(cpv)
+
+          let cpvnorm = cpv.normalize()
+          let dvnorm = dv.normalize()
+
+          let q = new THREE.Quaternion();
+          q.setFromUnitVectors( cpvnorm, dvnorm );
+
+          el.object3D.applyQuaternion(q)
         },
 
-
-
         handler: function(event) {
-          let cameraPos = document.querySelector('#camera').getAttribute('position');
-          let cameraString = String(cameraPos.x) + ' ' + String(cameraPos.y) + ' ' + String(cameraPos.z)
+          let cameraString = String(cameraPosition.x) + ' ' + String(cameraPosition.y) + ' ' + String(cameraPosition.z)
           let animation = document.createElement('a-animation');
-          let animId = 'anim-redBox'
-          animation.setAttribute('id', animId)
           animation.setAttribute('attribute', 'position');
           animation.setAttribute('to', cameraString);
-          animation.setAttribute('dur', '1000');
+          animation.setAttribute('dur', '5000');
           animation.setAttribute('fill', 'forwards');
           event.target.appendChild(animation)
         },
 
         init: function() {
             var el = this.el
+            this.setRotation(el)
             el.addEventListener("mouseenter", this.handler, true);
             el.addEventListener('mouseleave', function h(e) {
               el.removeEventListener('mouseenter', this.handler, true)
@@ -64,7 +75,9 @@
         <a-text value="Welcome to Gus Test!" position="0 1 -3" align="center" scale="4 4 4 "></a-text>
         <a-entity id='redBox' position="3 2 0" geometry="primitive: box" material="color: red" light="type: point; intensity: 0.5" tractor-beam>
         </a-entity>
-        <a-cone id='blueCone', position='-3 5 0' material="color: blue" light="type:point; intensity=2.0" tractor-beam></a-cone>
+        <a-entity>
+          <a-cone id='blueCone', position='32 15 6' material="color: blue" light="type:point; intensity: 2.0" tractor-beam></a-cone>
+        </a-entity>
     </a-scene>
 </body>
 </html>

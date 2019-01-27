@@ -1,89 +1,116 @@
 <html>
 
 <head>
-    <title>GusTest</title>
-    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
-    <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
-    <!-- REGISTERING A COMPONENT -->
-    <script>
-    const cameraPosition = {x: 0, y: 1.6, z: 0}
+  <title>GusTest</title>
+  <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+  <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+  <!-- REGISTERING A COMPONENT -->
+  <script>
+    const cameraPosition = { x: 0, y: 1.6, z: 0 }
 
     AFRAME.registerComponent('set-rot-by-pos', {
       schema: {},
       setRotation: function(el) {
-          let elPos = el.getAttribute('position')
-          let cpv = new THREE.Vector3(cameraPosition.x, cameraPosition.y, cameraPosition.z, 'XYZ')
-          let epv = new THREE.Vector3(elPos.x, elPos.y, elPos.z, 'XYZ')
-          let dv = epv.sub(cpv)
+        let elPos = el.getAttribute('position')
+        let cpv = new THREE.Vector3(cameraPosition.x, cameraPosition.y, cameraPosition.z, 'XYZ')
+        let epv = new THREE.Vector3(elPos.x, elPos.y, elPos.z, 'XYZ')
+        let dv = epv.sub(cpv)
 
-          let cpvnorm = cpv.normalize()
-          let dvnorm = dv.normalize()
+        let cpvnorm = cpv.normalize()
+        let dvnorm = dv.normalize()
 
-          let q = new THREE.Quaternion();
-          q.setFromUnitVectors( cpvnorm, dvnorm );
+        let q = new THREE.Quaternion();
+        q.setFromUnitVectors( cpvnorm, dvnorm );
 
-          el.object3D.applyQuaternion(q)
-        },
-        init: function() {
-          var el = this.el
-          this.setRotation(el)
-        }
+        el.object3D.applyQuaternion(q)
+      },
+      init: function() {
+        var el = this.el
+        this.setRotation(el)
+      }
     })
 
     AFRAME.registerComponent('tractor-beam', {
-        schema: {},
+      schema: {},
 
-        handler: function(event) {
-          let cameraString = String(cameraPosition.x) + ' ' + String(cameraPosition.y) + ' ' + String(cameraPosition.z)
-          let animation = document.createElement('a-animation');
-          animation.setAttribute('attribute', 'position');
-          animation.setAttribute('to', cameraString);
-          animation.setAttribute('dur', '5000');
-          animation.setAttribute('fill', 'forwards');
-          event.target.appendChild(animation)
-        },
+      handler: function(event) {
+        let cameraString = String(cameraPosition.x) + ' ' + String(cameraPosition.y) + ' ' + String(cameraPosition.z)
+        let animation = document.createElement('a-animation');
+        animation.setAttribute('attribute', 'position');
+        animation.setAttribute('to', cameraString);
+        animation.setAttribute('dur', '5000');
+        animation.setAttribute('fill', 'forwards');
 
-        init: function() {
-            var el = this.el
-            el.addEventListener("mouseenter", this.handler, true);
-            el.addEventListener('mouseleave', function h(e) {
-              el.removeEventListener('mouseenter', this.handler, true)
-              el.removeEventListener('mouseleave', h)
-            }.bind(this))
-        }
+        event.target.appendChild(animation)
+      },
+
+      init: function() {
+        var el = this.el
+        el.addEventListener("mouseenter", this.handler, true);
+        el.addEventListener('mouseleave', function h(e) {
+          el.removeEventListener('mouseenter', this.handler, true)
+          el.removeEventListener('mouseleave', h)
+        }.bind(this))
+      }
     })
-    </script>
+
+    AFRAME.registerComponent('rotate-on-object-axis', {
+      schema: {},
+
+      handler: function(event) {
+        let currentRotation = event.target.getAttribute('rotation')
+        let nextRotationZ = THREE.Math.radToDeg(event.target.object3D.rotation.z + Math.PI);
+        let toRotation = String(currentRotation.x) + ' ' + String(currentRotation.y) + ' ' + String(nextRotationZ)
+        let animation = document.createElement('a-animation');
+        animation.setAttribute('attribute', 'rotation');
+        animation.setAttribute('to', toRotation);
+        animation.setAttribute('dur', '5000');
+        animation.setAttribute('fill', 'forwards');
+
+        event.target.appendChild(animation)
+      },
+
+      init: function() {
+        var el = this.el
+        el.addEventListener("mouseenter", this.handler, true);
+        el.addEventListener('mouseleave', function h(e) {
+          el.removeEventListener('mouseenter', this.handler, true)
+          el.removeEventListener('mouseleave', h)
+        }.bind(this))
+      }
+    })
+  </script>
 </head>
 
 <body>
-    <a-scene raycaster="far: 100; objects: [link];" cursor="rayOrigin: mouse" camera-position onmousedown="mouseNotClicked = false;" light="defaultLightsEnabled: true;">
-        <a-assets>
-        </a-assets>
-        <!-- CAMERA -->
-        <a-camera id='camera' position="0 1.6 0" universal-controls>
-            <a-cursor />
-        </a-camera>
-        <a-entity environment="skyType: gradient; 
-                               grid: none;
-                               skyColor: #eeeeee;
-                               horizonColor: #440000;
-                               dressingScale: 3;
-                               dressing: trees;
-                               dressingColor: #ff6538;
-                               dressingAmount: 250;
-                               groundColor: #0d4838;
-                               groundColor2: #0d4838;
-                               shadow: true;
-                               ground: hills;
-                               groundYScale: 2;
-                               playArea: 0.2">
-        </a-entity>
-        <a-text value="Welcome to Gus Test!" position="0 1 -3" align="center" scale="4 4 4 "></a-text>
-        <a-entity id='redBox' position="3 2 0" geometry="primitive: box" material="color: red" light="type: point; intensity: 0.5" tractor-beam set-rot-by-pos>
-        </a-entity>
-        <a-entity>
-          <a-cone id='blueCone', position='32 15 6' material="color: blue" light="type:point; intensity: 2.0" tractor-beam set-rot-by-pos></a-cone>
-        </a-entity>
-    </a-scene>
+  <a-scene raycaster="far: 100; objects: [link];" cursor="rayOrigin: mouse" camera-position onmousedown="mouseNotClicked = false;" light="defaultLightsEnabled: true;">
+    <a-assets>
+    </a-assets>
+    <!-- CAMERA -->
+    <a-camera id='camera' position="0 1.6 0" universal-controls>
+      <a-cursor />
+    </a-camera>
+    <a-entity environment="skyType: gradient; 
+    grid: none;
+    skyColor: #eeeeee;
+    horizonColor: #440000;
+    dressingScale: 3;
+    dressing: trees;
+    dressingColor: #ff6538;
+    dressingAmount: 250;
+    groundColor: #0d4838;
+    groundColor2: #0d4838;
+    shadow: true;
+    ground: hills;
+    groundYScale: 2;
+    playArea: 0.2">
+  </a-entity>
+  <a-text value="Welcome to Gus Test!" position="0 1 -3" align="center" scale="4 4 4 "></a-text>
+  <a-entity id='redBox' position="3 2 0" geometry="primitive: box" material="color: red" light="type: point; intensity: 0.5" tractor-beam set-rot-by-pos rotate-on-object-axis>
+  </a-entity>
+  <a-entity>
+    <a-cone id='blueCone', position='32 15 6' material="color: blue" light="type:point; intensity: 2.0" tractor-beam set-rot-by-pos rotate-on-object-axis></a-cone>
+  </a-entity>
+</a-scene>
 </body>
 </html>

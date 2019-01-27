@@ -10,7 +10,7 @@
 
     AFRAME.registerComponent('set-rot-by-pos', {
       schema: {},
-      
+
       setRotation: function(el) {
         let elPos = el.getAttribute('position')
         let cpv = new THREE.Vector3(cameraPosition.x, cameraPosition.y, cameraPosition.z, 'XYZ')
@@ -96,7 +96,7 @@
     <a-entity environment="skyType: gradient; 
     grid: none;
     skyColor: #eeeeee;
-    horizonColor: #440000;
+    horizonColor: #eeeeee;
     dressingScale: 3;
     dressing: trees;
     dressingColor: #ff6538;

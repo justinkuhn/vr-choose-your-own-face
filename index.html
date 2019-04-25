@@ -6,36 +6,8 @@
     <script src="mirror.js"></script>
     <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
     <script src="https://npmcdn.com/aframe-layout-component@3.0.1"></script>
-      <script src="https://npmcdn.com/aframe-template-component@3.1.1"></script>
-      <script>
-        AFRAME.registerComponent('cursor-listener', {
-          init: function () {
-            var lastIndex = -1;
-            var COLORS = ['red', 'green', 'blue'];
-              
-            //it would probably be good to replace this event with the event fired by a a cursor countdown
-            this.el.addEventListener('click', function (evt) {
-              
-                setTimeout( function() {
-                
-                lastIndex = (lastIndex + 1) % COLORS.length;
-              //this.setAttribute('material', 'color', COLORS[lastIndex]);
-              console.log('I was clicked at: ', evt.detail.intersection.point);
-                document.querySelector('#startButton').emit('fadeEvent');
-                document.querySelector('#titleButton').emit('fadeEvent');
-                document.querySelector('#cabinButton').emit('fadeEvent');
-                }, 1000);
-                
-                setTimeout( function() {
-                document.querySelector('#who').emit('fadeIn');
-                document.querySelector('#outcastText').emit('fadeIn');
-                document.querySelector('#adventurerText').emit('fadeIn');
-                }, 3000);
-            });
-           
-          }
-        });
-     </script>
+    <script src="https://npmcdn.com/aframe-template-component@3.1.1"></script>
+    <script src="js/gaze-events.js"></script>
   </head>
     
   <body>
@@ -43,33 +15,47 @@
              fog="type: linear; color: #000000; near: 1; far: 20"
              debug>
        <a-assets>
-          <img id="start" src="start.png">
-          <img id="title" src="dontlookback.png">
-          <img id="cabin" src="cabin.png">
+          <img id="start" src="img/start.png">
+          <img id="title" src="img/dontlookback.png">
+          <img id="cabin" src="img/cabin.png">
+          <img id="olive" src="img/olive.png">
+          <img id="azure" src="img/azure.png">
       </a-assets>      
       <a-sky color="black"></a-sky>
 <!--       Front -->
-      <a-image id="startButton" src="#start" position="0 -1 -10" width="2" height="1"  transparent="true" cursor-listener
-               animation="property: material.opacity; to: 0; dur: 3000; startEvents: fadeEvent"></a-image>
+      <a-image id="startButton" src="#start" position="5 -1 -10" 
+               width="4" height="2"  
+               transparent="false" cursor-listener
+               animation="property: material.opacity; to: 0; dur: 3000; startEvents: fadeEvent">
+      </a-image>
         
-      <a-image id="titleButton" src="#title" position="0 4 -10" width ="8" height="3"  transparent="true"
-               animation="property: material.opacity; to: 0; dur: 3000; startEvents: fadeEvent"></a-image>
-       <a-image id="cabinButton" src="#cabin" position="-0.09876 -0.75298 -11" width="6" height="6" transparent="true"
-                animation="property: material.opacity; to: 0; dur: 3000; startEvents: fadeEvent"></a-image>
+      <a-image id="titleButton" src="#title" position="0 4 -10"
+               width ="8" height="3"  transparent="true"
+               animation="property: material.opacity; to: 0; dur: 3000; startEvents: fadeEvent">
+      </a-image>
+       <a-image id="cabinButton" src="#cabin" position="-0.09876 -0.75298 -11" 
+                width="6" height="6" transparent="true"
+                animation="property: material.opacity; to: 0; dur: 3000; startEvents: fadeEvent">
+       </a-image>
         
    <a-entity light="type: point; intensity: 10; distance: 20; decay: 2; color: #FFF" position="0 0 -30"
              animation="property: position; to: 0 0 0; dur: 5000; easing: ease"></a-entity>
        
 <!--      Second Screen  -->
-       <a-text id="who"value="Who are you?" position="0 3 -7" align="center" scale="4 4 4 " opacity= "0"
+       <a-text id="who" value="Who are you?" position="0 3 -7" align="center" scale="0 0 0" opacity= "0"
                animation="property: opacity; to: 1; dur: 2000; startEvents: fadeIn"></a-text>
-      <a-text id="outcastText" value="Outcast" position="-2 0 10" align="center" scale="2 2 2" opacity= "0"
+      <a-text id="outcastText" value="Olive" position="-2 1 -7" align="center" scale="0 0 0" opacity= "0"
                animation="property: opacity; to: 1; dur: 2000; startEvents: fadeIn"></a-text>
-      <a-text id="adventurerText" value="Adventurer" position="2 0 -7" align="center" scale="2 2 2" opacity= "0"
+      <a-text id="adventurerText" value="Azure" position="2 1 -7" align="center" scale="0 0 0" opacity= "0"
                animation="property: opacity; to: 1; dur: 2000; startEvents: fadeIn"></a-text>
+     <a-image id="olive-image" src="#olive" position="-2 -1 -7" width="4" height="4" scale="0 0 0" opacity="0" transparent="true"
+              animation="property: material.opacity; to: 1; dur: 2000; startEvents: fadeIn"
+               link="href: olive.html; visualAspectEnabled: false" ></a-image>
+         <a-image id="azure-image" src="#azure" position="2 -1 -7" width="4" height="4" scale="0 0 0" opacity="0" transparent="true"
+              animation="property: material.opacity; to: 1; dur: 2000; startEvents: fadeIn"
+                   link="href: azure.html; visualAspectEnabled: false" ></a-image>
       
-     
-      <a-entity link="href: GusTest.html; visualAspectEnabled: false" geometry="primitive: box" material="color:purple" position="-2 1 1"></a-entity>
+  
         
     
         
@@ -79,15 +65,23 @@
    
    <!-- Camera + cursor. -->
       <a-entity camera look-controls>
-          <a-entity cursor="fuse: true; fuseTimeout: 500"
+          <a-entity id="mycursor"
+                    cursor="fuse: true; fuseTimeout: 2000"
                     position="0 0 -1"
-                    geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.025"
+                    geometry="primitive: circle; radius: 0.02"
                     material="color: white; shader: flat"
-                    animation__click="property: geometry.thetaLength; from: 360; to: 0; dur: 2000; startEvents: click">
+                    animation="property: geometry.radius; from: 0.03; to: 0.005; dur: 2000; startEvents: changescene; pauseEvents: mouseleave">
           </a-entity>
       </a-entity>
     </a-scene>  
   </body>
 </html>
 
+<!--
 //trigger a fade out and movement upon click
+1. get the start button to work 
+2. import sound design
+3. import music
+
+
+-->

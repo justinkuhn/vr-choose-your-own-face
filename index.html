@@ -12,48 +12,53 @@
     
   <body>
     <a-scene light="defaultLightsEnabled: false"
-             fog="type: linear; color: #000000; near: 1; far: 20"
-             debug>
+             fog="type: linear; color: #000000; near: 1; far: 20">
        <a-assets>
           <img id="start" src="img/start.png">
           <img id="title" src="img/dontlookback.png">
           <img id="cabin" src="img/cabin.png">
           <img id="olive" src="img/olive.png">
           <img id="azure" src="img/azure.png">
-      </a-assets>      
+      </a-assets>   
+<!--        <a-entity raycaster="objects:.sb; far:0.5;">-->
       <a-sky color="black"></a-sky>
 <!--       Front -->
-      <a-image id="startButton" src="#start" position="5 -1 -10" 
-               width="4" height="2"  
-               transparent="false" cursor-listener
+      <a-image src="#start"  cursor-listener
+               id="startButton"  position="0 -2.6 -10"
+               rotation=""
+               width="3" height="1.5"
                animation="property: material.opacity; to: 0; dur: 3000; startEvents: fadeEvent">
       </a-image>
         
       <a-image id="titleButton" src="#title" position="0 4 -10"
-               width ="8" height="3"  transparent="true"
+               width ="10" height="3"  transparent="true"
                animation="property: material.opacity; to: 0; dur: 3000; startEvents: fadeEvent">
       </a-image>
-       <a-image id="cabinButton" src="#cabin" position="-0.09876 -0.75298 -11" 
-                width="6" height="6" transparent="true"
+       <a-image id="cabinButton" src="#cabin" position="-0.09876 -2 -11" 
+                width="8" height="8" transparent="true"
                 animation="property: material.opacity; to: 0; dur: 3000; startEvents: fadeEvent">
        </a-image>
+<!--
         
    <a-entity light="type: point; intensity: 10; distance: 20; decay: 2; color: #FFF" position="0 0 -30"
              animation="property: position; to: 0 0 0; dur: 5000; easing: ease"></a-entity>
+-->
        
 <!--      Second Screen  -->
        <a-text id="who" value="Who are you?" position="0 3 -7" align="center" scale="0 0 0" opacity= "0"
                animation="property: opacity; to: 1; dur: 2000; startEvents: fadeIn"></a-text>
-      <a-text id="outcastText" value="Olive" position="-2 1 -7" align="center" scale="0 0 0" opacity= "0"
+      <a-text id="outcastText" value="Olive" position="-4 1 -5" rotation="0 20 0" align="center" scale="0 0 0" opacity= "0"
                animation="property: opacity; to: 1; dur: 2000; startEvents: fadeIn"></a-text>
-      <a-text id="adventurerText" value="Azure" position="2 1 -7" align="center" scale="0 0 0" opacity= "0"
+      <a-text id="adventurerText" value="Azure" position="4 1 -5" rotation="0 -20 0" align="center" scale="0 0 0" opacity= "0"
                animation="property: opacity; to: 1; dur: 2000; startEvents: fadeIn"></a-text>
-     <a-image id="olive-image" src="#olive" position="-2 -1 -7" width="4" height="4" scale="0 0 0" opacity="0" transparent="true"
+     <a-image id="olive-image" src="#olive" position="-4 -1 -5" rotation="0 20 0" width="4" height="4" scale="0 0 0" opacity="0" transparent="true"
               animation="property: material.opacity; to: 1; dur: 2000; startEvents: fadeIn"
-               link="href: olive.html; visualAspectEnabled: false" ></a-image>
-         <a-image id="azure-image" src="#azure" position="2 -1 -7" width="4" height="4" scale="0 0 0" opacity="0" transparent="true"
+               link-handler
+              link="href: olive.html; visualAspectEnabled: false; on: link-event" ></a-image>
+     <a-image id="azure-image" src="#azure" position="4 -1 -5"  rotation="0 -20 0" width="4" height="4" scale="0 0 0" opacity="0" transparent="true"
               animation="property: material.opacity; to: 1; dur: 2000; startEvents: fadeIn"
-                   link="href: azure.html; visualAspectEnabled: false" ></a-image>
+            link-handler
+                link="href: azure.html; visualAspectEnabled: false; on: link-event" ></a-image>
       
   
         
@@ -67,9 +72,9 @@
       <a-entity camera look-controls>
           <a-entity id="mycursor"
                     cursor="fuse: true; fuseTimeout: 2000"
-                    position="0 0 -1"
+                    position="0 0 -0.5"
                     geometry="primitive: circle; radius: 0.02"
-                    material="color: white; shader: flat"
+                    material="color: #ddd; shader: flat"
                     animation="property: geometry.radius; from: 0.03; to: 0.005; dur: 2000; startEvents: changescene; pauseEvents: mouseleave">
           </a-entity>
       </a-entity>

@@ -1,5 +1,27 @@
- const cameraPosition = { x: 0, y: 1.6, z: 0 }
+var inventory = {
+    moss: true,
+    mushroom: true,
+    otheritem: true    
+}
+
+const cameraPosition = { x: 0, y: 1.6, z: 0 }
     var elementInitialPositions = {}
+    
+    AFRAME.registerComponent('collider-check', {
+//      dependencies: ['raycaster'],
+
+      init: function () {
+        this.el.addEventListener('raycaster-intersection', function (evt) {
+          console.log('Player hit something!');
+            console.log(evt.detail);
+        });
+          
+        this.el.addEventListener('raycaster-intersection-cleared', function (evt) {
+          console.log('Looked Away!');
+            console.log(evt.detail)
+        });
+      }
+    });
 
     AFRAME.registerComponent('snag-rot-on-land', {
       schema: {},
@@ -130,3 +152,23 @@
       }
 
     })
+    
+AFRAME.registerComponent('camera-controller', {
+    init: function () {
+        //when you collect an item, the cursor updates like a pie chart
+        // when you collect all three emit a completon heads up text
+        // listens for death event
+    },
+    
+     tick: (function () {
+        var position = new THREE.Vector3();
+        var rotation = new THREE.Euler();
+
+
+        this.el.object3D.getWorldPosition(position);
+        this.el.object3D.getWorldQuaternion(rotation);
+
+        console.log(position);
+        console.log(rotation);
+      })
+    });

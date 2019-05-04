@@ -1,0 +1,129 @@
+<html>
+
+<head>
+  <title>The Game</title>
+  <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+  <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+  <script src="js/gameplay-events.js"></script>
+  <script src="js/scene-events.js"></script>
+</head>
+
+<body>
+    <a-scene light="defaultLightsEnabled: false">
+        <a-assets>
+<!--            <a-asset-item id="field-obj" src="obj/Boundries.obj"></a-asset-item>-->
+            <a-asset-item id="field-glb" src="obj/Boundries.glb"></a-asset-item>
+        </a-assets>
+            
+<!--scenery objects-->
+<!--        <a-obj-model src="#field-obj" material="shader: flat; color: #805f40" obj-model="" rotation="-90 0" scale="0.5 0.5 0.5" position="8.53 0 8.9"></a-obj-model>-->
+        <a-gltf-model data-brackets-id="171" src="#field-glb" material="shader: flat; color: #805f40"  rotation="-90 0" position="9 0 9" scale="0.5 0.5 0.5"></a-gltf-model>
+        <a-sky color="black"></a-sky>
+        <a-entity id="environment"></a-entity>
+        <a-entity id='rocksandtrees'></a-entity>
+        <a-entity data-brackets-id="400" 
+                  id="cabin" geometry="depth: 15.76; height: 7.98; width: 8.44"
+                  class="collidable"
+                  cabin-listener
+                  position="9.56 0 9.14"
+                  visible="false">
+        </a-entity>
+         
+
+        
+<!--        all the game objects-->
+         <a-entity id="gameplay-objects">
+             <a-entity id='redBox' position="-3 2 -3" 
+                        geometry="primitive: box" material="color: red"
+                        class="collidable"
+                        object-lighting
+                        tractor-beam 
+                        set-rot-by-pos 
+                        rotate-on-object-axis>
+
+              </a-entity>
+              <a-entity id='blueCone' position='3 2 -3' 
+                        geometry="primitive:cone"
+                        material="color: blue" 
+                        class="collidable"
+                        object-lighting
+                        tractor-beam 
+                        set-rot-by-pos 
+                        rotate-on-object-axis>
+
+              </a-entity>
+              <a-entity id="ambient" light="type: ambient; color: #fff; intensity: 0.2"></a-entity>
+          </a-entity>
+<!--        teleporters-->
+          <a-entity id="teleporter-right"
+                    geometry="primitive: box"
+                    position="10 2 0"
+                    material="color: white"
+                    class="collidable"
+                    teleporter>
+          </a-entity>
+           <a-entity id="teleporter-left"
+                    geometry="primitive: box"
+                    position="-10 2 0"
+                    material="color: white"
+                    class="collidable"
+                    teleporter>
+          </a-entity>
+         <a-entity id="teleporter-front"
+                    geometry="primitive: box"
+                    position="0 3 -10"
+                    material="color: white"
+                    class="collidable"
+                    teleporter>
+          </a-entity>
+        <!--        death-->
+        <a-entity id="death"
+                  geometry="primitive: sphere; radius: 4"
+                  position="0 2 10"
+                  material="color: #ddd"
+                  class="collidable"
+                  visible="false"
+                  death-listener>
+        </a-entity>
+
+<!--        camera-->
+        <a-camera id='camera' position="0 1.6 0" 
+                  look-controls 
+                  camera-controller
+                  collider-check>
+             <a-entity raycaster="objects: .collidable; far: 20"></a-entity>
+             <a-entity id="cursor"
+                       geometry="primitive: circle;
+                                 radius: 0.02"
+                       position="0 0 -1"
+                       material="color: black; shader: flat">
+             </a-entity>
+             <a-entity id="progress-bar"
+                       geometry="primitive: circle; radius: 0.02; thetaStart: -90; thetaLength: 1"
+                       position="0 0 -0.9"
+                       material="color: white; shader: flat"></a-entity>
+        </a-camera>
+    </a-scene>
+</body>
+</html>
+<!--
+To Do
+ - note: should there be an automatic kill trigger?  Because right now the player can look back and not die
+5. put in objects for the player to pick up
+8. put in extra objects that do things to the player in this mode
+9. list the objects needed some where on the screen
+ - put the ingredient list somewhere where the player can read it (how about on the door or the cabin?)
+10. carry over the items picked from the cabin
+ - the cabin will read scene-events 
+ - update the inventory with what items need to be picked up based on recipe picked
+11. ambisonics
+12. environment (trees, other scenery)
+13. teleport machanics
+     - move the camera in the direction of the given teleport object
+     - i think i want to put the teleporter object in the 'doorway'
+     - move the player to a point where they're not looking at a teleporter object
+     - teleport to specific set of coordinates as defined by a function
+
+
+bugs:  cameraPosition
+-->

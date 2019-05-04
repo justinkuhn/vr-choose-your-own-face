@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>Link traverse</title>
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+  </head>
+  <body>
+    <a-scene
+             raycaster="far: 100; objects: [link];" 
+             cursor="rayOrigin: mouse" 
+             camera-position 
+             onmousedown="mouseNotClicked = false;" 
+             light="defaultLightsEnabled: true;">
+       <a-assets>
+          
+      </a-assets>      
+        <a-entity environment="skyType: gradient; 
+                               grid: none;
+                               skyColor: #555555;
+                               horizonColor: #111111;
+                               dressingScale: 3;
+                               dressing: trees;
+                               dressingColor: #ff6538;
+                               dressingAmount: 250;
+                               groundColor: #0d4838;
+                               groundColor2: #0d4838;
+                               shadow: true;
+                               ground: hills;
+                               groundYScale: 2;
+                               playArea: 0.2"></a-entity>
+      
+        <a-text value="The Link Works!" position="0 1 -3" align="center" scale="4 4 4 "></a-text>
+      
+      <a-entity link="href: index.html; visualAspectEnabled: false" geometry="primitive: box" material="color: pink" position="-1 1 1"></a-entity>
+        
+    </a-scene>  
+  </body>
+</html>

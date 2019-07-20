@@ -1,0 +1,72 @@
+<html>
+
+  <head>
+    <title>The Game</title>
+    <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+    <script src="js/cabin-events.js"></script>
+  </head>
+
+  <body stats>
+      <a-scene id="thescene" light="defaultLightsEnabled: true">
+          <a-assets>
+  <!--            <a-asset-item id="field-obj" src="obj/Boundries.obj"></a-asset-item>-->
+  <!--            I took off some numbers and a question mark at the end because it was causing some problems.-->
+              <a-asset-item id="field-glb" src="https://cdn.glitch.com/142329d1-a4be-42da-8d96-ba8339c3860c%2Ffield.glb" crossorigin="anonymous"></a-asset-item>
+            <audio id="azure-track" src="https://cdn.glitch.com/142329d1-a4be-42da-8d96-ba8339c3860c%2Fazure_bargaining_azuretrack.ogg?v=1561801393040" crossorigin="anonymous"></audio>
+            <audio id="death-track" src="https://cdn.glitch.com/142329d1-a4be-42da-8d96-ba8339c3860c%2Fazure_bargaining_deathtrack.ogg?v=1561801377795" crossorigin="anonymous"></audio>
+
+            
+          </a-assets>
+
+  <!--scenery objects-->
+  <!--        <a-obj-model src="#field-obj" material="shader: flat; color: #805f40" obj-model="" rotation="-90 0" scale="0.5 0.5 0.5" position="8.53 0 8.9"></a-obj-model>-->
+          <a-gltf-model src="#field-glb" material="shader: flat; color: #805f40"  rotation="-90 0" position="9 0 9" scale="0.5 0.5 0.5"></a-gltf-model>
+<!--           <a-gltf-model id="cabin" src="#cabin-glb" material="shader: flat; color: #777"
+                        scale="0.5 0.5 0.5" rotation="-90 0 0" position="9 0 9"
+                        class="collidable"
+                        cabin-listener></a-gltf-model>     -->
+          <a-sky color="black"></a-sky>
+
+
+
+
+
+          <!--        death-->
+          <a-entity id="death"
+                    geometry="primitive: sphere; radius: 1"
+                    position="0 2 5"
+                    material="color: red"
+                    class="collidable"
+                    death-interaction>
+            <a-sound id="death-sound" src="#death-track" autoplay="true"></a-sound>
+          </a-entity>
+
+  <!--        camera-->
+          <a-camera id="camera" position="0 1.6 0" 
+                    look-controls 
+                    camera-controller
+                    collider-check>
+  <!--           for the outside rooms it needs to be at least 35 -->
+               <a-entity id="raycaster" raycaster="objects: .collidable; far: 35; showLine: true"></a-entity>
+               <a-entity id="cursor"
+                         geometry="primitive: circle;
+                                   radius: 0.02"
+                         position="0 0 -1"
+                         material="color: black; shader: flat">
+               </a-entity>
+              <a-sound id="azure-sound" src="#azure-track" autoplay="true"></a-sound>
+          </a-camera>
+      </a-scene>
+  </body>
+</html>
+<!--  
+
+Closing Scene
+1. Visualization of Death
+2. attach audio objects to camera and death
+3. animation of lights, sound
+4. interact with pot or cauldron
+5. animation of objects into pot
+
+-->

@@ -1,31 +1,81 @@
 <html>
 
 <head>
-  <title>The Cabin</title>
+  <title>The Game</title>
   <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
   <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+  <script src="js/forest-events.js"></script>
   <script src="js/cabin-events.js"></script>
 </head>
 
-<body> 
-    <a-scene raycaster="far: 100; objects: [link];" 
-             cursor="rayOrigin: mouse" camera-position 
-             light="defaultLightsEnabled: true;">
+<body stats>
+    <a-scene id="thescene" light="defaultLightsEnabled: true">
         <a-assets>
+<!--            <a-asset-item id="field-obj" src="obj/Boundries.obj"></a-asset-item>-->
+<!--            I took off some numbers and a question mark at the end because it was causing some problems.-->
+<!--             <a-asset-item id="cabin-glb" src="https://cdn.glitch.com/142329d1-a4be-42da-8d96-ba8339c3860c%2FCabin.glb" crossorigin="anonymous"></a-asset-item> -->
+
         </a-assets>
-      
-      
+            
+<!--scenery objects-->
+   
+        <a-sky color="black"></a-sky>
     
-        
+<!--    cabin/scene    -->
+<!--       <a-gltf-model id="cabin" src="#cabin-glb" material="shader: flat; color: #777"scale="0.5 0.5 0.5" rotation="-90 0 0" position="0 0 0"></a-gltf-model> -->
+      <a-entity id="cabin-placeholder"
+                geometry="primitive: box;"
+                material="side: double; color: brown;"
+                scale="10 10 10"></a-entity>
+      
+<!--    lighting -->
+      
+<!--    book    -->
+      <a-entity id="book"
+                class="collidable"
+                geometry="primitive: box"
+                material="color: black"
+                position="1 1 -4"
+                tractor-beam-book
+                rotate-on-object-axis
+                animation__open="startEvents: open"></a-entity>
+<!--    door/exit    -->
+      <a-entity id="door"
+                class="collidable"
+                position="-1 1 -4"
+                rotation="90 0 0"
+                geometry="primitive: box;"
+                scale="1 5 3"
+                material="color: blue"
+                animation__light=""
+                animation__open="property: rotation; to: 0 0 0; dur: 4000; easing: linear;"
+                animation__move="property: position; to -2 1 -5; dur: 4000; easing: linear;"
+                ></a-entity>
+         
+
+      
+       
+          
+ 
 <!--        camera-->
-        <a-camera id='camera' position="0 1.6 0" 
-                  universal-controls>
-          <a-cursor></a-cursor>
+        <a-camera id="camera" position="0 1.6 0" 
+                  look-controls 
+                  camera-controller
+                  collider-check>
+<!--           for the outside rooms it needs to be at least 35 -->
+             <a-entity id="raycaster" raycaster="objects: .collidable; far: 35; showLine: true"></a-entity>
+             <a-entity id="cursor"
+                       geometry="primitive: circle;
+                                 radius: 0.02"
+                       position="0 0 -1"
+                       material="color: black; shader: flat">
+             </a-entity>
         </a-camera>
     </a-scene>
-    
 </body>
 </html>
+
+
 <!-- 
 Things to do
 
@@ -35,12 +85,6 @@ Opening Scene
 3. tractor beam for book
 4. interaction and animation for door
 
-Closing Scene
-1. Visualization of Death
-2. dialogue playthrough
-3. animation of lights, sound
-4. interact with pot or cauldron
-5. animation of objects into pot
  
 
 -->

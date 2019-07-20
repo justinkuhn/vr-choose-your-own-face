@@ -1,5 +1,39 @@
-# vr-choose-your-own-face
+Don't Look Back
+=================
 
-# Gus and Ryan and Aaron are supr kewl
 
-Brendon and Justin are going to be building a VR Choose-Your-Own-Adventure in both A-Frame and Unity
+
+Contributors
+------------
+
+### ← Justin Kuhn
+
+Communication & Development Lead
+
+### ← Brendon Towle
+
+3D Lead
+
+### ← Cassidy Slabaugh
+
+Story Lead
+
+### ← Jane Thomas
+
+2D Design Lead
+
+### ← Rebekah Middleton
+
+Music Lead
+
+### ← Ryan West
+
+Development
+
+### ← Luke Deeter 
+
+3D Modeling & Texturing
+
+-------------------
+
+\ ゜o゜)ノ

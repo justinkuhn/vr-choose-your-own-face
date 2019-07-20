@@ -4,67 +4,67 @@
   <title>The Game</title>
   <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
   <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
-  <script src="js/gameplay-events.js"></script>
-  <script src="js/scene-events.js"></script>
+  <script src="js/forest-events.js"></script>
 </head>
 
-<body>
+<body stats>
     <a-scene id="thescene" light="defaultLightsEnabled: false">
         <a-assets>
 <!--            <a-asset-item id="field-obj" src="obj/Boundries.obj"></a-asset-item>-->
 <!--            I took off some numbers and a question mark at the end because it was causing some problems.-->
             <a-asset-item id="field-glb" src="https://cdn.glitch.com/142329d1-a4be-42da-8d96-ba8339c3860c%2Ffield.glb" crossorigin="anonymous"></a-asset-item>
             <a-asset-item id="cabin-glb" src="https://cdn.glitch.com/142329d1-a4be-42da-8d96-ba8339c3860c%2FCabin.glb" crossorigin="anonymous"></a-asset-item>
-            <a-mixin  id="teleport" 
+            <a-mixin  id="teleport"
                       material="color: purple"
-                      teleporter 
-                      geometry="primitive: box"
+                      teleporter
+                      geometry="primitive: dodecahedron"
+                      animation="property: rotation; to: 0 360 0; dur: 5000; from: 0 0 0; easing: linear; loop: true"
                       scale="1 1 1"></a-mixin>
         </a-assets>
-            
+
 <!--scenery objects-->
 <!--        <a-obj-model src="#field-obj" material="shader: flat; color: #805f40" obj-model="" rotation="-90 0" scale="0.5 0.5 0.5" position="8.53 0 8.9"></a-obj-model>-->
         <a-gltf-model src="#field-glb" material="shader: flat; color: #805f40"  rotation="-90 0" position="9 0 9" scale="0.5 0.5 0.5"></a-gltf-model>
         <a-gltf-model id="cabin" src="#cabin-glb" material="shader: flat; color: #777"
                       scale="0.5 0.5 0.5" rotation="-90 0 0" position="9 0 9"
                       class="collidable"
-                      cabin-listener></a-gltf-model>    
+                      cabin-listener></a-gltf-model>
         <a-sky color="black"></a-sky>
-    
-      
-         
 
-        
+
+
+
+
 <!--        all the game objects-->
          <a-entity id="gameplay-objects">
-             <a-entity id="redBox" position="-3 2 -3" 
+             <a-entity id="redBox" position="-3 2 -3"
                         geometry="primitive: box" material="color: red"
                         class="collidable"
                         object-lighting
-                        tractor-beam 
-                        set-rot-by-pos 
+                        tractor-beam
+                        set-rot-by-pos
                         rotate-on-object-axis>
 
               </a-entity>
-              <a-entity id="blueCone" position="3 2 -3" 
+              <a-entity id="blueCone" position="3 2 -3"
                         geometry="primitive:cone"
-                        material="color: blue" 
+                        material="color: blue"
                         class="collidable"
                         object-lighting
-                        tractor-beam 
-                        set-rot-by-pos 
+                        tractor-beam
+                        set-rot-by-pos
                         rotate-on-object-axis>
 
               </a-entity>
               <a-entity id="ambient" light="type: ambient; color: #fff; intensity: 0.2"></a-entity>
           </a-entity>
-      
+
 <!--        teleporters-->
-      
+
 
           <a-entity position="-39 2 -35" mixin="teleport" class="collidable"></a-entity>
           <a-entity position="27 2 -45" mixin="teleport" class="collidable"></a-entity>
-          <a-entity position="-10 2 -35" mixin="teleport" class="collidable"></a-entity>
+          <a-entity position="-2 2 -35" mixin="teleport" class="collidable"></a-entity>
           <a-entity position="55 2 -40" mixin="teleport" class="collidable"></a-entity>
 
           <a-entity position="-38 2 -5.5" mixin="teleport" class="collidable"></a-entity>
@@ -90,9 +90,9 @@
           <a-entity position="-4 2 54" mixin="teleport" class="collidable"></a-entity>
           <a-entity position="18 2 51" mixin="teleport" class="collidable"></a-entity>
           <a-entity position="54 2 55" mixin="teleport" class="collidable"></a-entity>
-      
-       
-          
+
+
+
         <!--        death-->
         <a-entity id="death"
                   geometry="primitive: sphere; radius: 4"
@@ -104,11 +104,12 @@
         </a-entity>
 
 <!--        camera-->
-        <a-camera id="camera" position="0 1.6 0" 
-                  look-controls 
+        <a-camera id="camera" position="0 1.6 0"
+                  look-controls
                   camera-controller
                   collider-check>
-             <a-entity raycaster="objects: .collidable; far: 40"></a-entity>
+<!--           for the outside rooms it needs to be at least 35 -->
+             <a-entity id="raycaster" raycaster="objects: .collidable; far: 35; showLine: true"></a-entity>
              <a-entity id="cursor"
                        geometry="primitive: circle;
                                  radius: 0.02"
@@ -125,27 +126,18 @@
 </html>
 <!--
 To Do
- - note: should there be an automatic kill trigger?  Because right now the player can look back and not die
 5. put in objects for the player to pick up
 8. put in extra objects that do things to the player in this mode
 9. list the objects needed some where on the screen
  - put the ingredient list somewhere where the player can read it (how about on the door or the cabin?)
 10. carry over the items picked from the cabin
- - the cabin will read scene-events 
+ - the cabin will read scene-events
  - update the inventory with what items need to be picked up based on recipe picked
-11. ambisonics
 12. environment (trees, other scenery)
-13. teleport machanics - all done
-     - move the camera in the direction of the given teleport object
-     - i think i want to put the teleporter object in the 'doorway' -nope
-     - move the player to a point where they're not looking at a teleporter object
-     - that's how I choose the points
-     - teleport to specific set of coordinates 
-14. when teleporter is outsideplay area - it is not interactable
-the bigger ones  cannot have two openings on one side
-so we should create 4 'forest areas where the player cannot go
+13 accidental teleportation...
 jsambisonics
 documentation on python http-server
 
-bugs:  cameraPosition
+object fades as it travels towards you
+
 -->

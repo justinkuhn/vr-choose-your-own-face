@@ -1,19 +1,25 @@
 
 //positions to choose from for the camera
 //these are the initial positions
-var positions = {
-    right: {
-        x:20,y:1.6,z:0
-    },
-    left: {
-        x:-18,y:1.6,z:-3
-    },
-    front: {
-        x:-2,y:1.6,z:-21
-    }
-}
-var itemsCollected = false;
+var teleporterLocations = [
+    {x:20, y:1.6, z:0},
+    {x:-18, y:1.6, z:-3},
+    {x:-2, y:1.6, z:-21}
+  ]
 
+// Starting from the top left and going right
+// 1. {x:-39, y:1.6, z:-40}
+// 2.{x:-10, y:1.6, z:-35}
+// 3.{x:27, y:1.6, z:-45}
+// 4.{x:55, y:1.6, z:-40}
+
+// 5.
+
+
+
+var itemsCollected = false;
+// var teleporterEl = [];
+// var numTeleporters = 3;
 
 AFRAME.registerComponent('object-lighting', {
     init: function() {
@@ -109,22 +115,40 @@ AFRAME.registerComponent('death-listener', {
     }
 });
 
+//step 1 create all teleport elements
+
+// var sceneEl = document.querySelector('a-scene');
+// console.log(sceneEl);
+
+// for (var i=0; i<numTeleporters; i++) {
+//   teleporterEl[i] = document.createElement('a-entity');
+//   teleporterEl[i].setAttribute("id", "teleporter-" + i);
+//   teleporterEl[i].setAttribute("position", teleporterLocations[i]);
+//   teleporterEl[i].setAttribute("class", "collidable");
+//   teleporterEl[i].setAttribute("material", "color", "white");
+//   teleporterEl[i].setAttribute("geometry", { primitive: "box" } );
+//   console.log(teleporterEl[i]);
+// }
 
 
+
+// create teleport functionality
 AFRAME.registerComponent('teleporter', {
    init: function() {
        //listen for intersection with raycaster
        //start fade on intersection
        //after two seconds, change location of camera
        //fade in objects
-       
+      
        var teleportTimer;
        var gameObjects = document.getElementById('gameplay-objects').children;
        var camera = document.getElementById('camera');
+       var death = document.getElementById('death');
        var el = this.el;
 
        
        this.el.addEventListener('raycaster-intersected', function(evt) {
+         
            var gameObjects = document.getElementById('gameplay-objects').children;
            for(var i=0;i<gameObjects.length;i++) {
                    gameObjects[i].emit('fadeOut');
@@ -134,21 +158,28 @@ AFRAME.registerComponent('teleporter', {
             teleportTimer = setTimeout( function() {
                  
                 //determine the position that the camera will go to based on the world quaternion
+                var position = el.getAttribute("position")
+              
+                camera.setAttribute('position', position);
+              //death follows you
+                var rotation = new THREE.Quaternion();
+                camera.object3D.getWorldQuaternion(rotation);
+              
+                var deathDistance = new THREE.Vector3(0, 0, 1);
+                deathDistance.applyQuaternion(rotation);
+                console.log(" Death distance x is " + deathDistance.x);
+              
+                death.setAttribute('position', position);
+                death.object3D.position.addScaledVector(deathDistance, 10);
+              
                 
-                if(el.id == 'teleporter-front') {
-                    camera.setAttribute('position', positions.front);
-                } else if (el.id == 'teleporter-left') {
-                    camera.setAttribute('position', positions.left);
-                } else {
-                    camera.setAttribute('position', positions.right);
-                }
                 
                 //determine which teleporter items will appear
                 //set new teleporter objects position relative to camera position
                 //set death position relative to camera position
                 
                 
-               console.log(document.querySelector('#ambient').getAttribute('light.intensity'));  
+             //  console.log(document.querySelector('#ambient').getAttribute('light.intensity'));  
                 
                for(var i=0;i<gameObjects.length;i++) {
                    gameObjects[i].emit('fadeIn');
@@ -175,3 +206,16 @@ AFRAME.registerComponent('teleporter', {
       //return the next position
   }
 });
+
+
+// for (var i=0; i<numTeleporters; i++) { 
+//     teleporterEl[i].setAttribute('teleporter', '');
+//   }
+
+// //add all elements to scene
+// setTimeout( function() {
+//   for (var i=0; i<numTeleporters; i++) {
+//     console.log(i);
+//     sceneEl.appendChild(teleporterEl[i]);
+//   }
+// }, 2000);

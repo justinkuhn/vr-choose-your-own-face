@@ -398,7 +398,7 @@ AFRAME.registerComponent('teleporter', {
           function() {
             let epv = elementInitialPositions[_event.target.id]
 
-            let camera = document.querySelector("[camera]").getObject3D('camera')
+            let camera = document.getElementById("camera").getObject3D('camera')
 
             let initVector = new THREE.Vector3(0, 0, -1)
             let dirVector = new THREE.Vector3()
@@ -451,7 +451,7 @@ AFRAME.registerComponent('camera-controller', {
                 if(ingredients[item]) numberCollected++; 
             }
             
-           
+
             document.getElementById('progress-bar').setAttribute('geometry', {thetaLength: (numberCollected/totalItems * 360)})                     
                                  
         });

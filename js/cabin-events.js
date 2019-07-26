@@ -9,12 +9,14 @@
           el.removeEventListener('raycaster-intersected', handler, true)
           el.removeEventListener('raycaster-intersected-cleared', h)
         }.bind(this))
-        
+    
+          el.addEventListener('click', function () {
+              el.sceneEl.emit('bookRead',true)
+          });
+          
         function handler() {
         
           position = document.getElementById('camera').getAttribute('position');
-            
-          
             
             el.setAttribute('animation__pos', {
                 property: 'position',
@@ -22,12 +24,29 @@
                 dur: 5000,
                 easing: 'easeInOutCubic'
             });
-          
-          el.emit('open');
-
+       
           }
       }
     });
+
+AFRAME.registerComponent('exit-handler', {
+    init: function () {
+       //send changescene to cursor
+        //emit link-event
+        var el = this.el;
+        
+        el.addEventListener('fusing', function () {
+            document.getElementById("mycursor").emit('changescene');
+            setTimeout( function () {
+                //send character to state
+                el.emit('open');
+                el.emit('move');
+                el.sceneEl.emit('sceneSet', 'forest');  
+            }, 2000)
+            
+        });
+    }
+});
 
 AFRAME.registerComponent('death-interaction', {
   init: function() {

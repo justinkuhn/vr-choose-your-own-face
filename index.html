@@ -15,10 +15,33 @@
     <script src="js/forest-events.js"></script>
     <script src="js/cabin-events.js"></script>
     <script>AFRAME.registerComponent('raycastable', {});</script>
+    <script>document.addEventListener('keydown', function(event) {
+            //hotkeys for 1 2 3 4 5 6 for different scenes
+            var sceneEl = document.getElementById('scene')
+              switch (event.keyCode) {
+                  case 49:
+                      sceneEl.emit('sceneSet','startScreen');
+                      break;
+                  case 50:
+                      sceneEl.emit('sceneSet','characters');
+                      break;
+                  case 51:
+                      sceneEl.emit('sceneSet','motive');
+                      break;
+                  case 52:
+                      sceneEl.emit('sceneSet','cabin');
+                      break;
+                  case 53:
+                      sceneEl.emit('sceneSet','death');
+                      break;
+                  default: break;
+                      
+              }
+            });</script>
   </head>
 
   <body>
-    <a-scene light="defaultLightsEnabled: false"
+    <a-scene id="scene" light="defaultLightsEnabled: false"
              fog="type: linear; color: #000000; near: 1; far: 20">
        <a-assets>
           <img id="start" src="./img/start.png" crossorigin="anonymous">
@@ -163,6 +186,7 @@
           <a-entity position="18 2 51" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
           <a-entity position="54 2 55" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
 <!--                template for game objects-->
+<!--
         <a-entity id="game-objects" bind-for="for: gameObject; in: gameObjects; key: name" bind__visible="scene == 'forest'">
         <template>
           <a-entity position="{{ hotspot.position }}">
@@ -176,6 +200,7 @@
           </a-entity>
         </template>
       </a-entity>
+-->
 
 
 

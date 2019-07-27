@@ -2,13 +2,12 @@ AFRAME.registerComponent('cursor-listener', {
           init: function () {
             var el = this.el;  
             //it would probably be good to replace this event with the event fired by a a cursor countdown
-            el.addEventListener('fusing', function (evt) {
+            el.addEventListener('fusing', function () {
                 
                 document.getElementById("mycursor").emit('changescene');
                 document.getElementById('startButton').setAttribute('width',6);  
                 document.getElementById('startButton').setAttribute('height',3);               
                 var enterTime = setTimeout( function() {
-                
                     //for state change
                 el.sceneEl.emit('sceneSet', 'characters');  
                                     

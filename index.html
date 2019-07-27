@@ -32,7 +32,10 @@
                       sceneEl.emit('sceneSet','cabin');
                       break;
                   case 53:
-                      sceneEl.emit('sceneSet','death');
+                      sceneEl.emit('sceneSet','forest');
+                      break;
+                  case 54:
+                      sceneEl.emit('sceneSet','forest');
                       break;
                   default: break;
                       
@@ -139,18 +142,14 @@
                         animation__move="property: position; to -2 1 -5; dur: 4000; easing: linear; startEvents: move"
                         ></a-entity>
 <!--Forest Scene-->
-                        <a-entity light="type: ambient; color: #BBB" bind__visible="scene == 'forest'"></a-entity>
+                        <a-entity light="type: ambient; color: #BBB intensity: 0.9;" bind__visible="scene == 'forest'"></a-entity>
                         <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1" bind__visible="scene == 'forest'"></a-entity>
                        <a-gltf-model src="#field-glb" material="shader: flat; color: #805f40"  rotation="-90 0 0" position="9 0 9" scale="0.5 0.5      0.5" bind__visible="scene == 'forest'"></a-gltf-model>
                         <a-gltf-model id="cabin" src="#cabin-glb" material="shader: flat; color: #777"
                           scale="0.5 0.5 0.5" rotation="-90 0 0" position="9 0 9"
                           bind-toggle__raycastable="scene == 'forest' && itemsCollected" bind__visible="scene == 'forest'"
                           cabin-listener></a-gltf-model>
-                        <a-gltf-model src="#mushroom-gltf" 
-                          class="collidable"
-                          material="color: #0f0; side: double; vertexColors: face; width: 515.72" scale="0.42 0.64 0.4" position="4.1737 2.13 -10.30248" gltf-model="https://cdn.glitch.com/142329d1-a4be-42da-8d96-ba8339c3860c%2FMushroom1.gltf?v=1560624630650"
-                          tractor-beam bind__visible="scene == 'forest'"
-                          ></a-gltf-model>
+                        
                         <a-entity id="death"
                                   geometry="primitive: sphere; radius: 4"
                                   position="0 2 10"
@@ -202,7 +201,10 @@
       </a-entity>
 -->
 
-
+                        <a-gltf-model src="#mushroom-gltf" 
+                            bind-toggle__raycastable="scene == 'forest'"                        
+                          material="color: #0f0; side: double; vertexColors: face; width: 515.72" scale="0.42 0.64 0.4" position="4.1737 2.13 -10.30248" gltf-model="https://cdn.glitch.com/142329d1-a4be-42da-8d96-ba8339c3860c%2FMushroom1.gltf?v=1560624630650"
+                          tractor-beam bind__visible="scene == 'forest'"></a-gltf-model>
 
 <!--Death Scene-->
 
@@ -213,10 +215,11 @@
 <!--       <a-plane mirror></a-plane> -->
 
    <!-- Camera + cursor. -->
-      <a-entity id="camera" camera look-controls>
+      <a-entity id="camera" camera look-controls
+                 position="0 2.5 0">
           <a-entity id="mycursor"
                     cursor="fuse: true; fuseTimeout: 2000"
-                    raycaster="objects: [raycastable]"
+                    raycaster="objects: [raycastable]; far: 35; showLine: true"
                     position="0 0 -0.5"
                     geometry="primitive: circle; radius: 0.02"
                     material="color: #ddd; shader: flat"
@@ -226,6 +229,27 @@
     </a-scene>
   </body>
 </html>
+
+
+<!--things to do
+
+better way to control lights when switching scenes
+game objects collecting to state
+
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!--
 //trigger a fade out and movement upon click

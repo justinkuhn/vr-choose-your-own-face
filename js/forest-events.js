@@ -1,19 +1,4 @@
 
-//positions to choose from for the camera
-//these are the initial positions
-var teleporterLocations = [
-    {x:20, y:1.6, z:0},
-    {x:-18, y:1.6, z:-3},
-    {x:-2, y:1.6, z:-21}
-  ]
-
-// Starting from the top left and going right
-// 1. {x:-39, y:1.6, z:-40}
-// 2.{x:-10, y:1.6, z:-35}
-// 3.{x:27, y:1.6, z:-45}
-// 4.{x:55, y:1.6, z:-40}
-
-// 5.
 
 var ingredients = {
     blueCone: false,
@@ -22,7 +7,7 @@ var ingredients = {
 
 
 
-    var cameraPosition = {x:0,y:0,z:0};
+    var cameraPosition = {x:0,y:2.5,z:0};
     var position;
     var elementInitialPositions = {}
 
@@ -303,7 +288,6 @@ AFRAME.registerComponent('object-lighting', {
         }.bind(this))
         
         function handler() {
-        
           position = document.getElementById('camera').getAttribute('position');
             
           

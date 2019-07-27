@@ -123,6 +123,8 @@ AFRAME.registerState({
         for(var i = 0; i < currentData.objects.length; i++) {
             state.objects.push(currentData.objects[i]);
             var currentObj = document.getElementById(currentData.objects[i]);
+            //to prevent objects from rescaling
+            if(currentData.scene != 'forest' || 'cabin' || 'death')
             currentObj.setAttribute('scale',{x:1,y:1,z:1});
             currentObj.emit('fadeIn');
         }

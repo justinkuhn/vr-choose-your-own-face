@@ -1,5 +1,12 @@
 //what an action looks like
 //AFRAME.scenes[0].emit('increaseScore', {points: 50});
+function allTrue(object) { 
+            for (var i in object) {
+                if (!object[i]) return false;
+            }
+            return true;
+        }
+
 var sceneData = {
         startScreen: {
           objects: 
@@ -50,7 +57,11 @@ AFRAME.registerState({
         'startButton',
         'titleButton'
       ],
-      itemsToCollect: [],
+      itemsToCollect: {
+          blueCone: false,
+          redBox: false,
+          mushroom: false
+      },
       itemsCollected: false,
       bookRead: false,
       character: "",
@@ -78,7 +89,15 @@ AFRAME.registerState({
                 document.getElementById(state.objects[i]).setAttribute('scale',{x:0,y:0,z:0});
             }
             state.scene = scene;
-       console.log(state.scene)
+        
+         
+        if(scene == 'forest') {
+            document.getElementById('light1').setAttribute('intensity',1);
+            document.getElementById('light2').setAttribute('intensity',1);
+            document.getElementById('youdied').setAttribute('opacity',0);
+        } else if(scene == 'startScreen') {
+            
+        }
        
     },
       
@@ -96,22 +115,55 @@ AFRAME.registerState({
           
           if(motive == 'erase'){
               for(var i=0;i<itemsData.erase.length;i++){
-                  state.itemsToCollect.push(itemsData.erase[i]);
+                  state.itemsToCollect[itemsData.erase[i]] = false;
               } 
           } else if(motive == 'zombie') {
               for(var i=0; i<itemsData.zombie.length; i++){
-                  state.itemsToCollect.push(itemsData.zombie[i]);
+                  state.itemsToCollect[itemsData.zombie[i]] = false;
               }
           } else if(motive == 'hologram') {
               for(var i=0; i<itemsData.hologram.length;i++) {
-                  state.itemsToCollect.push(itemsData.hologram[i]);
+                  state.itemsToCollect[itemsData.hologram[i]] = false;
               }
           }
           console.log(state.itemsToCollect)
       },
       
-      bookRead: function(state, bool) { 
-          state.bookRead = bool; }
+      bookRead: function(state, bool) { state.bookRead = bool; },
+      
+      itemCollected: function(state, item) {
+          state.itemsToCollect[item] = true;
+          
+          if(allTrue(state.itemsToCollect)) {
+              state.itemsCollected = true;
+          }
+      },
+      
+      updateProgress: function(state) {
+            var totalItems = Object.keys(state.itemsToCollect).length;
+            //update theta length based on fraction
+            var numberCollected = 0;
+            
+            for(var item in state.itemsToCollect){
+                if(state.itemsToCollect[item]) numberCollected++; 
+            }
+            
+
+            document.getElementById('progress-bar').setAttribute('geometry', {thetaLength: (numberCollected/totalItems * 360)})                     
+      },
+      
+      completedGame: function(state) {
+          state.itemsCollected = false;
+          state.bookRead = false;
+          state.gamesPlayed++;
+            
+        if(state.gamesPlayed == 6){
+            //play credits
+            //state.scene == 'credits';
+        } else {
+            state.scene = 'startScreen';
+        }
+      }
   },
     computeState: function (state) {
         //get data for current scene from object
@@ -126,7 +178,11 @@ AFRAME.registerState({
             //to prevent objects from rescaling
             if(currentData.scene != 'forest' || 'cabin' || 'death')
             currentObj.setAttribute('scale',{x:1,y:1,z:1});
+            console.log(currentObj);
             currentObj.emit('fadeIn');
         }
+        
+        
+        
     }
 });

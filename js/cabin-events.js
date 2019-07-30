@@ -59,28 +59,26 @@ AFRAME.registerComponent('death-interaction', {
     
     function deathhandler() {
 //       turn on audio
-      var deathSound = document.getElementById('death-sound');
-      var playerSound = document.getElementById('azure-sound');
-      console.log(deathSound);
+      var death = document.getElementById('death-2');
+      var camera = document.getElementById('camera');
+    
       console.log("turning on audio...");
-      deathSound.play();
-      playerSound.play();
+      death.components.sound.playSound();
+      camera.components.sound.playSound();
+      var lights = document.getElementById('death-lights').children;
       // wait until audio is finished
-      deathSound.addEventListener("stopped", function() {
-        
+      death.addEventListener("sound-ended", function() {
+          console.log("completed game");
+        for(var i=0;i<lights.length;i++) {
+               lights[i].emit('fadeOut');
+           }
         //      fade out and return to start screen
-        window.location.href ='index.html';
+        setTimeout( function() {
+            el.sceneEl.emit('completedGame');
+        }, 2000)
       });
       
     }
   }
   
 });
-
-
-// Things to do:
-
-// 1. allow door to be opened once book is opened and closed
-// 2. closing animation for book
-// 3. lighting control
-// 4. populate book with recipe items

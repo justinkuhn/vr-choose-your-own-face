@@ -1,66 +1,223 @@
 <html>
   <head>
-    <title>Don't Look Back</title>
-    <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+      <title>Don't Look Back</title> 
+<meta charset="UTF-8">
+    <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
-    <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
-    <script src="https://npmcdn.com/aframe-layout-component@3.0.1"></script>
-    <script src="https://npmcdn.com/aframe-template-component@3.1.1"></script>
+    <script src="https://unpkg.com/aframe-state-component@6.6.0/dist/aframe-state-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-proxy-event-component@2.1.0/dist/aframe-proxy-event-component.min.js"></script>
+    
     <script src="js/startscreen-events.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/forest-events.js"></script>
+    <script src="js/cabin-events.js"></script>
+    <script>AFRAME.registerComponent('raycastable', {});</script>
+    <script>document.addEventListener('keydown', function(event) {
+            //hotkeys for 1 2 3 4 5 6 for different scenes
+            var sceneEl = document.getElementById('scene')
+              switch (event.keyCode) {
+                  case 49:
+                      sceneEl.emit('sceneSet','startScreen');
+                      break;
+                  case 50:
+                      sceneEl.emit('sceneSet','characters');
+                      break;
+                  case 51:
+                      sceneEl.emit('sceneSet','motive');
+                      break;
+                  case 52:
+                      sceneEl.emit('sceneSet','cabin');
+                      break;
+                  case 53:
+                      sceneEl.emit('sceneSet','forest');
+                      break;
+                  case 54:
+                      sceneEl.emit('sceneSet','death');
+                      break;
+                  default: break;
+                      
+              }
+            });</script>
   </head>
 
   <body>
-    <a-scene light="defaultLightsEnabled: false"
-             fog="type: linear; color: #000000; near: 1; far: 20">
+    <a-scene id="scene" light="defaultLightsEnabled: false"
+             fog="type: linear; color: #000000; near: 1; far: 40">
        <a-assets>
           <img id="start" src="./img/start.png" crossorigin="anonymous">
           <img id="title" src="img/dontlookback.png">
           <img id="cabin" src="img/cabin.png">
           <img id="olive" src="img/olive.png">
           <img id="azure" src="img/azure.png">
+          <a-mixin id="text" geometry="primitive:plane" align="center" animation="property: opacity; from: 0; to: 1; dur: 2000; startEvents: fadeIn" bind-toggle__raycastable="scene == 'motive'"></a-mixin>
+          <a-asset-item id="field-glb" src="https://cdn.glitch.com/142329d1-a4be-42da-8d96-ba8339c3860c%2Ffield.glb" crossorigin="anonymous"></a-asset-item>
+            <a-asset-item id="cabin-glb" src="https://cdn.glitch.com/142329d1-a4be-42da-8d96-ba8339c3860c%2FCabin.glb" crossorigin="anonymous"></a-asset-item>
+            <a-asset-item id="mushroom-gltf" src="https://cdn.glitch.com/142329d1-a4be-42da-8d96-ba8339c3860c%2FMushroom1.gltf?v=1560624630650" crossorigin="anonymous"></a-asset-item>
+            <audio id="azure-track" src="audio/azure_bargaining_azuretrack.ogg" crossorigin="anonymous" preload="auto"></audio>
+            <audio id="death-track" src="audio/azure_bargaining_deathtrack.ogg" crossorigin="anonymous" preload="auto"></audio>
+            <a-mixin  id="teleport" material="color: purple" teleporter geometry="primitive: dodecahedron" animation="property: rotation; to: 0 360 0; dur: 5000; from: 0 0 0; easing: linear; loop: true" scale="1 1 1"></a-mixin>
+            <a-mixin id="gameObject" tractor-beam bind__visible="scene == 'forest'"  bind-toggle__raycastable="scene == 'forest'"></a-mixin>
       </a-assets>
-<!--        <a-entity raycaster="objects:.sb; far:0.5;">-->
       <a-sky color="black"></a-sky>
-<!--       Front -->
+<!--       Start Screen -->
       <a-image src="#start"  cursor-listener
                id="startButton"  position="0 -2.6 -10"
                rotation=""
                width="3" height="1.5"
-               animation="property: material.opacity; to: 0; dur: 3000; startEvents: fadeEvent">
+               animation__out="property: material.opacity; from: 1; to: 0; dur: 2000; startEvents: fadeOut"
+               animation__in="property: material.opacity; from: 0; to: 1; dur: 2000; startEvents: fadeIn"
+               bind__visible="scene == 'startScreen'"
+               bind-toggle__raycastable="scene == 'startScreen'">
       </a-image>
 
       <a-image id="titleButton" src="#title" position="0 4 -10"
                width ="10" height="3"  transparent="true"
-               animation="property: material.opacity; to: 0; dur: 3000; startEvents: fadeEvent">
+               animation__out="property: material.opacity; from: 1; to: 0; dur: 2000; startEvents: fadeOut"
+               animation__in="property: material.opacity; from: 0; to: 1; dur: 2000; startEvents: fadeIn"
+               bind__visible="scene == 'startScreen'">
       </a-image>
        <a-image id="cabinButton" src="#cabin" position="-0.09876 -2 -11"
                 width="8" height="8" transparent="true"
-                animation="property: material.opacity; to: 0; dur: 3000; startEvents: fadeEvent">
+                animation__out="property: material.opacity; from: 1; to: 0; dur: 2000; startEvents: fadeOut"
+                animation__in="property: material.opacity; from: 0; to: 1; dur: 2000; startEvents: fadeIn"
+                bind__visible="scene == 'startScreen'">
        </a-image>
-<!--
 
-   <a-entity light="type: point; intensity: 10; distance: 20; decay: 2; color: #FFF" position="0 0 -30"
-             animation="property: position; to: 0 0 0; dur: 5000; easing: ease"></a-entity>
--->
 
 <!--      Second Screen  -->
-       <a-text id="who" value="Who are you?" position="0 3 -7" align="center" scale="0 0 0" opacity= "0"
-               animation="property: opacity; to: 1; dur: 2000; startEvents: fadeIn"></a-text>
-      <a-text id="outcastText" value="Olive" position="-4 1 -5" rotation="0 20 0" align="center" scale="0 0 0" opacity= "0"
-               animation="property: opacity; to: 1; dur: 2000; startEvents: fadeIn"></a-text>
-      <a-text id="adventurerText" value="Azure" position="4 1 -5" rotation="0 -20 0" align="center" scale="0 0 0" opacity= "0"
-               animation="property: opacity; to: 1; dur: 2000; startEvents: fadeIn"></a-text>
-     <a-image id="olive-image" src="#olive" position="-4 -1 -5" rotation="0 20 0" width="4" height="4" scale="0 0 0" opacity="0" transparent="true"
+       <a-text id="who" value="Who are you?" width="10" position="0 3 -7" align="center" opacity= "0"
+               animation="property: opacity; to: 1; dur: 2000; startEvents: fadeIn"
+               bind__visible="scene == 'characters'"
+               ></a-text>
+       <a-text id="outcastText" value="Olive" width="10" position="-4 1 -5" rotation="0 20 0" align="center" scale="0 0 0" opacity= "0"
+               animation="property: opacity; to: 1; dur: 2000; startEvents: fadeIn" bind__visible="scene == 'characters'"></a-text>
+       <a-text id="adventurerText" value="Azure"  width="10" position="4 1 -5" rotation="0 -20 0" align="center" scale="0 0 0" opacity= "0"
+               animation="property: opacity; to: 1; dur: 2000; startEvents: fadeIn" bind__visible="scene == 'characters'"></a-text>
+       <a-image id="olive-image" src="#olive" position="-4 -1 -5" rotation="0 20 0" width="4" height="4" scale="0 0 0" opacity="0"                        transparent="true" bind__visible="scene == 'characters'"
               animation="property: material.opacity; to: 1; dur: 2000; startEvents: fadeIn"
-               link-handler
-              link="href: olive.html; visualAspectEnabled: false; on: link-event" ></a-image>
-     <a-image id="azure-image" src="#azure" position="4 -1 -5"  rotation="0 -20 0" width="4" height="4" scale="0 0 0" opacity="0" transparent="true"
+              character-handler bind-toggle__raycastable="scene == 'characters'"></a-image>
+       <a-image id="azure-image" src="#azure" position="4 -1 -5"  rotation="0 -20 0" width="4" height="4" scale="0 0 0" opacity="0"                      transparent="true" bind__visible="scene == 'characters'"
               animation="property: material.opacity; to: 1; dur: 2000; startEvents: fadeIn"
-            link-handler
-                link="href: azure.html; visualAspectEnabled: false; on: link-event" ></a-image>
+              character-handler bind-toggle__raycastable="scene == 'characters'"></a-image>
 
+<!--Motive Screen-->
+               <a-text id="why" value="Why did you come here?" width="10" position="0 3 -7" 
+                   mixin="text" bind__visible="scene == 'motive'"></a-text>
+                <a-text id="erase" value="To forget he ever existed" width="7" position="0 0 -5" mixin="text"              
+                    bind__visible="scene == 'motive'" motive-handler></a-text>
+                <a-text id="zombie" value="To bring him back" width="7" position="5 0 -5" mixin="text"
+                     bind__visible="scene == 'motive'" motive-handler></a-text>
+                <a-text id="hologram" value="To keep him with me" width="7" position="-5 0 -5" mixin="text"               
+                    bind__visible="scene == 'motive'" motive-handler></a-text>
+<!--Cabin Scene-->
+              <a-entity id="cabin-placeholder"
+                        geometry="primitive: box; width: 10; height:10; depth: 10"
+                        material="side: double; color: brown;"
+                        bind__visible="scene == 'cabin' || scene == 'death'"                        
+                        ></a-entity>
+      
+        <!--    lighting -->
+                <a-entity light="type: ambient; color: #BBB" bind__visible="scene == 'cabin'"></a-entity>
+                <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1" bind__visible="scene == 'cabin'"></a-entity>
+        <!--    book    -->
+              <a-entity id="book"
+                        bind-toggle__raycastable="scene == 'cabin'"
+                        bind__visible="scene == 'cabin'"
+                        geometry="primitive: box"
+                        material="color: black"
+                        position="1 1 -4"
+                        tractor-beam-book
+                        animation__open="startEvents: open"></a-entity>
+<!--                        rotate-on-object-axis not working right now-->
+        <!--    door/exit    -->
+              <a-entity id="door"
+                        bind-toggle__raycastable="scene == 'cabin' && bookRead"
+                        bind__visible="scene == 'cabin' || scene == 'death'"
+                        position="-1 1 -4"
+                        rotation="90 0 0"
+                        geometry="primitive: box; width: 1; height: 5; depth: 3;"
+                        material="color: blue"
+                        exit-handler
+                        animation__open="property: rotation; to: 0 0 0; dur: 4000; easing: linear; startEvents: open"
+                        animation__move="property: position; to -2 1 -5; dur: 4000; easing: linear; startEvents: move"
+                        ></a-entity>
+<!--Forest Scene-->
+                       <a-entity id="forest-lights" bind__visible="scene == 'forest'">
+                           <a-entity id="light1" light="type: ambient; color: #BBB;"  fading>
+                               </a-entity>
+                           <a-entity id="light2" light="type: directional; color: #FFF" position="-0.5 1 1" 
+                             fading></a-entity>
+                       </a-entity>
+                        
+                       <a-gltf-model src="#field-glb" material="shader: flat; color: #805f40"  rotation="-90 0 0" position="9 0 9" scale="0.5 0.5      0.5" bind__visible="scene == 'forest'"></a-gltf-model>
+                        <a-gltf-model id="cabin" src="#cabin-glb" material="shader: flat; color: #777"
+                          scale="0.5 0.5 0.5" rotation="-90 0 0" position="9 0 9"
+                          bind-toggle__raycastable="scene == 'forest' && itemsCollected" bind__visible="scene == 'forest'"
+                          cabin-listener></a-gltf-model>
+                        
+                        <a-entity id="death"
+                                  geometry="primitive: sphere; radius: 4"
+                                  position="0 2 10"
+                                  material="color: #ddd; opacity: 0"
+                                  bind-toggle__raycastable="scene == 'forest'"
+                                  bind__visible="scene == 'forest'"
+                                  death-listener>
+                                    <a-text id="youdied" value="You Died." width="10" align="center" color="white" opacity="0" position="0 0.5 -5" rotation="0 180 0" animation="property: opacity; to: 1; startEvents: youdied; dur: 500;" bind__visible="scene == 'forest'"></a-text>
+                        </a-entity>
+                        
+                        
 
+                      <a-entity position="-39 2 -35" mixin="teleport" bind-toggle__raycastable="scene == 'forest'" bind__visible="scene == 'forest'"></a-entity>
+           <a-entity position="27 2 -45" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          <a-entity position="-2 2 -35" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+           <a-entity position="55 2 -40" mixin="teleport" bind__visible="scene == 'forest'"bind-toggle__raycastable="scene == 'forest'"></a-entity>
+             <a-entity position="-38 2 -5.5" mixin="teleport" bind__visible="scene == 'forest'"bind-toggle__raycastable="scene == 'forest'"></a-entity>
+            <a-entity position="-18.5 2 0" mixin="teleport" bind__visible="scene == 'forest'"bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          <a-entity position="0 2 -20" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          <a-entity position="15 2 -20" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          <a-entity position="33 2 -4" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          <a-entity position="54 2 -7" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+        <a-entity position="-38 2 17" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+        <a-entity position="-18 2 17" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          <a-entity position="-2 2 34" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          <a-entity position="18 2 34" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          <a-entity position="34 2 16" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          <a-entity position="56 2 19" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          <a-entity position="0 2 0" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          <a-entity position="20 2 -2" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          <a-entity position="19 2 19" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          <a-entity position="0 2 20" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+           <a-entity position="-38 2 51" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          <a-entity position="-4 2 54" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          <a-entity position="18 2 51" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          <a-entity position="54 2 55" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
+          
+<!--           game objects-->
+          <a-gltf-model id="mushroom" src="#mushroom-gltf" mixin="gameObject"                   
+              material="color: #0f0; side: double; vertexColors: face; width: 515.72" 
+              scale="0.42 0.64 0.4" position="4.1737 2.13 -10.30248"></a-gltf-model>
+          <a-entity id="redBox" position="-3 2 -3" 
+                geometry="primitive: box" material="color: red"
+                mixin="gameObject"></a-entity>
+          <a-entity id="blueCone" position="3 2 -3" 
+                geometry="primitive: cone" material="color: blue" 
+                mixin="gameObject"></a-entity>
 
+<!--Death Scene-->
+       <a-entity id="death-lights">
+            <a-entity light="type: ambient; color: #BBB" bind__visible="scene == 'death'"></a-entity>
+            <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1" bind__visible="scene == 'death'"></a-entity>  
+       </a-entity>
+       
+        <a-entity id="death-2"
+                    geometry="primitive: sphere; radius: 1"
+                    position="0 2 5"
+                    material="color: red"
+                    bind__visible="scene == 'death'"
+                    bind-toggle__raycastable="scene == 'death'"
+                    death-interaction
+                    sound="src: #death-track; maxDistance: 5; autoplay: false;">
+          </a-entity>
 
 
       <a-entity id="leftHand" link-controls="hand: left"></a-entity>
@@ -68,24 +225,35 @@
 <!--       <a-plane mirror></a-plane> -->
 
    <!-- Camera + cursor. -->
-      <a-entity camera look-controls>
+      <a-entity id="camera" camera look-controls
+                 position="0 2.5 0"
+                 sound="src: #azure-track; autoplay: false;">
           <a-entity id="mycursor"
                     cursor="fuse: true; fuseTimeout: 2000"
-                    position="0 0 -0.5"
+                    raycaster="objects: [raycastable]; far: 35; showLine: true"
+                    position="0 0 -1"
                     geometry="primitive: circle; radius: 0.02"
                     material="color: #ddd; shader: flat"
                     animation="property: geometry.radius; from: 0.03; to: 0.005; dur: 2000; startEvents: changescene; pauseEvents: mouseleave">
           </a-entity>
+          <a-entity id="progress-bar"
+                   geometry="primitive: circle; radius: 0.02; thetaStart: -90; thetaLength: 1"
+                   position="0 0 -0.9"
+                   material="color: white; shader: flat"></a-entity>
       </a-entity>
     </a-scene>
   </body>
 </html>
 
-<!--
-//trigger a fade out and movement upon click
-1. get the start button to work
-2. import sound design
-3. import music
+
+<!--things to do 07/28
+
+make death block the raycaster
+make the walls block the raycaster
+fade in and fade out for all scenes
+fix start button trigger
+death scene
+sound design and ux
 
 
 -->

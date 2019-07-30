@@ -9,12 +9,14 @@
           el.removeEventListener('raycaster-intersected', handler, true)
           el.removeEventListener('raycaster-intersected-cleared', h)
         }.bind(this))
-        
+    
+          el.addEventListener('click', function () {
+              el.sceneEl.emit('bookRead',true)
+          });
+          
         function handler() {
         
           position = document.getElementById('camera').getAttribute('position');
-            
-          
             
             el.setAttribute('animation__pos', {
                 property: 'position',
@@ -22,12 +24,29 @@
                 dur: 5000,
                 easing: 'easeInOutCubic'
             });
-          
-          el.emit('open');
-
+       
           }
       }
     });
+
+AFRAME.registerComponent('exit-handler', {
+    init: function () {
+       //send changescene to cursor
+        //emit link-event
+        var el = this.el;
+        
+        el.addEventListener('fusing', function () {
+            document.getElementById("mycursor").emit('changescene');
+            setTimeout( function () {
+                //send character to state
+                el.emit('open');
+                el.emit('move');
+                el.sceneEl.emit('sceneSet', 'forest');  
+            }, 2000)
+            
+        });
+    }
+});
 
 AFRAME.registerComponent('death-interaction', {
   init: function() {
@@ -40,28 +59,26 @@ AFRAME.registerComponent('death-interaction', {
     
     function deathhandler() {
 //       turn on audio
-      var deathSound = document.getElementById('death-sound');
-      var playerSound = document.getElementById('azure-sound');
-      console.log(deathSound);
+      var death = document.getElementById('death-2');
+      var camera = document.getElementById('camera');
+    
       console.log("turning on audio...");
-      deathSound.play();
-      playerSound.play();
+      death.components.sound.playSound();
+      camera.components.sound.playSound();
+      var lights = document.getElementById('death-lights').children;
       // wait until audio is finished
-      deathSound.addEventListener("stopped", function() {
-        
+      death.addEventListener("sound-ended", function() {
+          console.log("completed game");
+        for(var i=0;i<lights.length;i++) {
+               lights[i].emit('fadeOut');
+           }
         //      fade out and return to start screen
-        window.location.href ='index.html';
+        setTimeout( function() {
+            el.sceneEl.emit('completedGame');
+        }, 2000)
       });
       
     }
   }
   
 });
-
-
-// Things to do:
-
-// 1. allow door to be opened once book is opened and closed
-// 2. closing animation for book
-// 3. lighting control
-// 4. populate book with recipe items

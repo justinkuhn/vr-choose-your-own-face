@@ -66,6 +66,8 @@ AFRAME.registerState({
       bookRead: false,
       character: "",
       motive: "",
+      deathclip: "",
+      playerclip: "",
       gamesPlayed: 0
   },
  
@@ -75,14 +77,7 @@ AFRAME.registerState({
     // The environment to change to is passed by the event detail.
     sceneSet: function (state, scene) {
 
-        //this doesn't do anything right now because nothing can fade out if it's invisible already
-        for(var i=0; i<state.objects.length; i++){
-            document.getElementById(state.objects[i]).emit('fadeOut');
-        }
-        //timeout
-        //change scene
-      
-        
+       
             
             
             for(var i=0; i<state.objects.length; i++){
@@ -114,19 +109,45 @@ AFRAME.registerState({
           state.motive = motive;
           
           if(motive == 'erase'){
+              
+              if(state.character == 'azure'){
+                  state.deathclip = "#azuredeatherase";
+                  state.playerclip = "#azureerase";
+              } else {
+                  state.deathclip = "#olivedeatherase";
+                  state.playerclip = "#oliveerase";
+              }
+              
               for(var i=0;i<itemsData.erase.length;i++){
                   state.itemsToCollect[itemsData.erase[i]] = false;
               } 
           } else if(motive == 'zombie') {
+              
+              if(state.character == 'azure'){
+                  state.deathclip = "#azuredeathzombie";
+                  state.playerclip = "#azurezombie";
+              } else {
+                  state.deathclip = "#olivedeathzombie";
+                  state.playerclip = "#olivezombie";
+              }
+              
               for(var i=0; i<itemsData.zombie.length; i++){
                   state.itemsToCollect[itemsData.zombie[i]] = false;
               }
           } else if(motive == 'hologram') {
+              
+               if(state.character == 'azure'){
+                  state.deathclip = "#azuredeathhologram";
+                  state.playerclip = "#azurehologram";
+              } else {
+                  state.deathclip = "#olivedeathhologram";
+                  state.playerclip = "#olivehologram";
+              }
+              
               for(var i=0; i<itemsData.hologram.length;i++) {
                   state.itemsToCollect[itemsData.hologram[i]] = false;
               }
           }
-          console.log(state.itemsToCollect)
       },
       
       bookRead: function(state, bool) { state.bookRead = bool; },
@@ -178,7 +199,6 @@ AFRAME.registerState({
             //to prevent objects from rescaling
             if(currentData.scene != 'forest' || 'cabin' || 'death')
             currentObj.setAttribute('scale',{x:1,y:1,z:1});
-            console.log(currentObj);
             currentObj.emit('fadeIn');
         }
         

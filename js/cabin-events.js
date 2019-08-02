@@ -51,7 +51,7 @@ AFRAME.registerComponent('exit-handler', {
 AFRAME.registerComponent('death-interaction', {
   init: function() {
     var el = this.el;
-    
+      
     el.addEventListener("raycaster-intersected", deathhandler, true);
     el.addEventListener("raycaster-intersection-cleared", function() {
 //      clear timeout

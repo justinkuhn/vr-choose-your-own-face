@@ -75,3 +75,29 @@ AFRAME.registerComponent('motive-handler', {
     }
 });
 
+AFRAME.registerComponent('ambisonics', {
+    init: function () {
+        var el = this.el;
+        
+
+        // Make connection and start play. Hook up the user input for the playback.
+        foaRenderer.initialize().then(function() {
+          audioElementSource.connect(foaRenderer.input);
+          foaRenderer.output.connect(audioContext.destination);
+
+          // This is necessary to activate audio playback out of autoplay block.
+         document.getElementById('startButton').addEventListener('click',() => {
+            audioContext.resume();
+            audioElement.play();
+          });
+        //debug
+        });
+    },
+                                
+    
+    tick: function() {
+        //hook it up to the camera
+        foaRenderer.setRotationMatrix4(this.el.getObject3D('camera').matrixWorld.elements);
+    }
+});
+

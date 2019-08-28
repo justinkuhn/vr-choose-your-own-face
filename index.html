@@ -11,6 +11,7 @@
     <script src="js/state.js"></script>
     <script src="js/forest-events.js"></script>
     <script src="js/cabin-events.js"></script>
+    <script src="js/aframe-stereo-component.min.js"></script>
     <script>AFRAME.registerComponent('raycastable', {});</script>
     <script>document.addEventListener('keydown', function(event) {
             //hotkeys for 1 2 3 4 5 6 for different scenes
@@ -38,17 +39,31 @@
                       
               }
             });</script>
+      <script src="https://www.gstatic.com/external_hosted/omnitone/build/omnitone.min.js"></script>
+    <script>
+             // Set up an audio element to feed the ambisonic source audio feed.
+        const audioElement = document.createElement('audio');
+        audioElement.src = 'audio/testambi.wav';
+
+        // Create AudioContext, MediaElementSourceNode and FOARenderer.
+        const audioContext = new AudioContext();
+        const audioElementSource = audioContext.createMediaElementSource(audioElement);
+        const foaRenderer = Omnitone.createFOARenderer(audioContext);
+    </script>
   </head>
 
   <body>
     <a-scene id="scene" light="defaultLightsEnabled: false"
-             fog="type: linear; color: #000000; near: 1; far: 40">
+             >
+<!--             fog="type: linear; color: #000000; near: 1; far: 40"-->
        <a-assets>
           <img id="start" src="./img/start.png" crossorigin="anonymous">
           <img id="title" src="img/dontlookback.png">
           <img id="cabin" src="img/cabin.png">
           <img id="olive" src="img/olive.png">
           <img id="azure" src="img/azure.png">
+          <img id="left" src="img/left.png" crossorigin="anonymous">
+          <img id="right" src="img/right.png" crossorigin="anonymous">
           <a-mixin id="text" geometry="primitive:plane; height: auto; width: auto;" material="color: green" align="center" animation__in="property: opacity; from: 0; to: 1; dur: 2000; startEvents: fadeIn" animation__out="property: opacity; from: 1; to: 0; dur: 2000; startEvents: fadeOut" bind-toggle__raycastable="scene == 'motive'"></a-mixin>
           <a-asset-item id="field-glb" src="https://cdn.glitch.com/142329d1-a4be-42da-8d96-ba8339c3860c%2Ffield.glb" crossorigin="anonymous"></a-asset-item>
             <a-asset-item id="cabin-glb" src="obj/Cabin_WebFile.glb" crossorigin="anonymous"></a-asset-item>
@@ -68,7 +83,14 @@
             <a-mixin  id="teleport" material="color: purple" teleporter geometry="primitive: dodecahedron" animation="property: rotation; to: 0 360 0; dur: 5000; from: 0 0 0; easing: linear; loop: true" scale="1 1 1"></a-mixin>
             <a-mixin id="gameObject" tractor-beam bind__visible="scene == 'forest'"  bind-toggle__raycastable="scene == 'forest'"></a-mixin>
       </a-assets>
-      <a-sky color="black"></a-sky>
+<!--      <a-sky color="black"></a-sky>-->
+
+    <a-sky id="sky1" src="#left" stereo="eye:left" bind__visible="scene == 'forest'"></a-sky>
+      <a-sky id="sky2" src="#right" stereo="eye:right" bind__visible="scene == 'forest'"></a-sky>
+       
+       <a-sky color="black"></a-sky>
+        
+        
 <!--       Start Screen -->
      <a-entity id="starters">
          <a-image src="#start"  cursor-listener
@@ -247,9 +269,10 @@
 <!--       <a-plane mirror></a-plane> -->
 
    <!-- Camera + cursor. -->
-      <a-entity id="camera" camera look-controls
+      <a-entity id="camera" camera look-controls ambisonics
                  position="0 2.5 0"
                  bind__sound="src: playerclip"
+                 stereocam="eye:left;"
                  sound="autoplay: false;">
           <a-entity id="mycursor"
                     cursor="fuse: true; fuseTimeout: 2000"
@@ -275,7 +298,6 @@ make death block the raycaster
 make the walls block the raycaster
  - raycaster-intersection will emit in the event detail all of the entities intersected
 
-fade in and fade out for all scenes
 fix start button trigger
 death scene
 sound design and ux

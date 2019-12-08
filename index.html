@@ -6,6 +6,7 @@
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
     <script src="https://unpkg.com/aframe-state-component@6.6.0/dist/aframe-state-component.min.js"></script>
     <script src="https://unpkg.com/aframe-proxy-event-component@2.1.0/dist/aframe-proxy-event-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-template-component@^3.2.1/dist/aframe-template-component.min.js"></script>
     
     <script src="js/startscreen-events.js"></script>
     <script src="js/state.js"></script>
@@ -192,7 +193,7 @@
                              fading></a-entity>
                        </a-entity>
                         
-                       <a-gltf-model src="#field-glb" material="shader: flat; color: #805f40"  rotation="-90 0 0" position="9 0 9" scale="0.5 0.5      0.5" bind__visible="scene == 'forest'"></a-gltf-model>
+                       <a-gltf-model src="#field-glb" material="shader: flat; color: #805f40" rotation="-90 0 0" position="11.17784 -1.46076 12.42866" scale="0.8 0.8 0.5" bind__visible="scene == 'forest'"></a-gltf-model>
                         <a-gltf-model id="cabin" src="#cabin-glb" material="shader: flat; color: #777"
                           scale="0.36 0.36 0.36" position="10.44 0 17.1"
                           bind-toggle__raycastable="scene == 'forest' && itemsCollected" bind__visible="scene == 'forest'"
@@ -206,8 +207,13 @@
                                   bind__visible="scene == 'forest'"
                                   death-listener>
                                     <a-text id="youdied" value="You Died." width="10" align="center" color="white" opacity="0" position="0 0.5 -5" rotation="0 180 0" animation="property: opacity; to: 1; startEvents: youdied; dur: 500;" bind__visible="scene == 'forest'"></a-text>
-                        </a-entity>
-                        
+                         </a-entity>
+                         
+<!--                         height 20 feet width 60feet so 3:1 ratio  aframe units of 15*45-->
+<!--                        sample here-->
+                   <a-plane id="forest-wall" color="green" height="15" position="-20.56 6.22 2.07" material="" geometry="width: 45" rotation="0 90 0"></a-plane>
+<!-- whole list will be done in js with createElement-->
+<!--
                         
 
                       <a-entity position="-39 2 -35" mixin="teleport" bind-toggle__raycastable="scene == 'forest'" bind__visible="scene == 'forest'"></a-entity>
@@ -235,6 +241,7 @@
           <a-entity position="18 2 51" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
           <a-entity position="54 2 55" mixin="teleport" bind__visible="scene == 'forest'" bind-toggle__raycastable="scene == 'forest'"></a-entity>
           
+-->
 <!--           game objects-->
           <a-gltf-model id="mushroom" src="#mushroom-gltf" mixin="gameObject"                   
               material="color: #0f0; side: double; vertexColors: face; width: 515.72" 
@@ -269,7 +276,7 @@
 <!--       <a-plane mirror></a-plane> -->
 
    <!-- Camera + cursor. -->
-      <a-entity id="camera" camera look-controls ambisonics
+      <a-entity id="camera" camera look-controls wasd-controls ambisonics
                  position="0 2.5 0"
                  bind__sound="src: playerclip"
                  stereocam="eye:left;"

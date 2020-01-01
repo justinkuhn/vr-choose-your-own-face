@@ -51,6 +51,7 @@
         const audioElementSource = audioContext.createMediaElementSource(audioElement);
         const foaRenderer = Omnitone.createFOARenderer(audioContext);
     </script>
+     <script src="https://unpkg.com/aframe-ground-component@0.0.4/dist/aframe-ground-component.min.js"></script>
   </head>
 
   <body>
@@ -65,6 +66,7 @@
           <img id="azure" src="img/azure.png">
           <img id="left" src="img/left.png" crossorigin="anonymous">
           <img id="right" src="img/right.png" crossorigin="anonymous">
+          <img id="forest" src="img/forest.png" crossorigin="anonymous">
           <a-mixin id="text" geometry="primitive:plane; height: auto; width: auto;" material="color: green" align="center" animation__in="property: opacity; from: 0; to: 1; dur: 2000; startEvents: fadeIn" animation__out="property: opacity; from: 1; to: 0; dur: 2000; startEvents: fadeOut" bind-toggle__raycastable="scene == 'motive'"></a-mixin>
           <a-asset-item id="field-glb" src="https://cdn.glitch.com/142329d1-a4be-42da-8d96-ba8339c3860c%2Ffield.glb" crossorigin="anonymous"></a-asset-item>
             <a-asset-item id="cabin-glb" src="obj/Cabin_WebFile.glb" crossorigin="anonymous"></a-asset-item>
@@ -83,6 +85,9 @@
             <audio id="olivedeathzombie" src="audio/OLIVE_DENIAL_DEATH.ogg" crossorigin="anonymous" preload="auto"></audio>
             <a-mixin  id="teleport" material="color: purple" teleporter geometry="primitive: dodecahedron" animation="property: rotation; to: 0 360 0; dur: 5000; from: 0 0 0; easing: linear; loop: true" scale="1 1 1"></a-mixin>
             <a-mixin id="gameObject" tractor-beam bind__visible="scene == 'forest'"  bind-toggle__raycastable="scene == 'forest'"></a-mixin>
+            <a-mixin id="trees" bind__visible="scene == 'forest'" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" ></a-mixin>
+            <a-mixin id="smalltree-mixin" scale="25 25 25" bind__visible="scene == 'forest'" gltf-model="obj/smalltree.gltf"></a-mixin>
+            <a-mixin id="bigtree-mixin" scale="25 25 25" bind__visible="scene == 'forest'" gltf-model="obj/bigtree.gltf"></a-mixin>
       </a-assets>
 <!--      <a-sky color="black"></a-sky>-->
 
@@ -185,11 +190,12 @@
                         animation__open="property: rotation; to: 0 0 0; dur: 4000; easing: linear; startEvents: open"
                         animation__move="property: position; to -2 1 -5; dur: 4000; easing: linear; startEvents: move"
                         ></a-entity>
+                
 <!--Forest Scene-->
                        <a-entity id="forest-lights" bind__visible="scene == 'forest'">
-                           <a-entity id="light1" light="type: ambient; color: #BBB;"  fading>
+                           <a-entity id="light1" light="type: ambient; color: #BBB; intensity: 0.5;"  fading>
                                </a-entity>
-                           <a-entity id="light2" light="type: directional; color: #FFF" position="-0.5 1 1" 
+                           <a-entity id="light2" light="type: directional; color: #FFF" position="-0.5 4 1" 
                              fading></a-entity>
                        </a-entity>
                         
@@ -209,9 +215,18 @@
                                     <a-text id="youdied" value="You Died." width="10" align="center" color="white" opacity="0" position="0 0.5 -5" rotation="0 180 0" animation="property: opacity; to: 1; startEvents: youdied; dur: 500;" bind__visible="scene == 'forest'"></a-text>
                          </a-entity>
                          
-<!--                         height 20 feet width 60feet so 3:1 ratio  aframe units of 15*45-->
+<!--                         height 20 feet width 60feet so 3:1 ratio  aframe units of 15*45-->  
 <!--                        sample here-->
-                   <a-plane id="forest-wall" color="green" height="15" position="-20.56 6.22 2.07" material="" geometry="width: 45" rotation="0 90 0"></a-plane>
+                   
+                   <a-image id="forest-image" mixin="trees" position="-20.56 5.1 8"  rotation="0 90 0"></a-image>
+                  <a-entity mixin="smalltree-mixin" position="-20.5 5 -9"></a-entity>
+                  <a-entity  mixin="smalltree-mixin" position="-10.80443 5 -21.11383" ></a-entity>
+                  <a-entity mixin="smalltree-mixin" position="26.39792 5 -21.11383" ></a-entity>
+                   <a-entity mixin="bigtree-mixin" position="-19.96692 2.16649 -1.72625"></a-entity>
+                   <a-entity mixin="smalltree-mixin" position="39.06336 5 -11.11081"></a-entity>
+                   <a-entity mixin="smalltree-mixin" position="39.06336 5 20.29673"></a-entity>
+                   <a-entity mixin="bigtree-mixin" position="37.7492 2.16649 -1.27335"></a-entity>
+                   <a-entity ground="active: true; groundYScale: 3.23; groundXZScale: 1.56; groundTexture: walkernoise; groundColor: #415434; groundColor2: #59484b" visible="" position="0 -1.45 0" bind__visible="scene == 'forest'" >
 <!-- whole list will be done in js with createElement-->
 <!--
                         

@@ -65,7 +65,8 @@ AFRAME.registerState({
       motive: "",
       deathclip: "",
       playerclip: "",
-      gamesPlayed: 0
+      gamesPlayed: 0,
+      lightIntensity: 0.5
   },
  
   handlers: {

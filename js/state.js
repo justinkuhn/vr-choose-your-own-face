@@ -42,9 +42,9 @@ var sceneData = {
     };
 
 var itemsData = {
-    erase: ['termite queen','fermented fruit','mushroom'],
-    zombie: ['poop','bleeding heart','fang'],
-    hologram: ['bug exoskeleton','ghostly moss','dandelion']
+    erase: ['termite-entity','sugarcane-entity','mushroom-entity'],
+    zombie: ['skull-entity','heart-entity','fang-entity'],
+    hologram: ['beetle-entity','feather-entity','dandelion-entity']
 }
 
 
@@ -58,9 +58,6 @@ AFRAME.registerState({
         'titleButton'
       ],
       itemsToCollect: {
-          blueCone: false,
-          redBox: false,
-          mushroom: false
       },
       itemsCollected: false,
       bookRead: false,

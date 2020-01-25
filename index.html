@@ -1,7 +1,7 @@
 <html>
   <head>
-      <title>Don't Look Back</title> 
-<meta charset="UTF-8">
+    <title>Don't Look Back</title> 
+    <meta charset="UTF-8">
     <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
     <script src="https://unpkg.com/aframe-state-component@6.6.0/dist/aframe-state-component.min.js"></script>
@@ -69,11 +69,21 @@
           <img id="right" src="img/right.png" crossorigin="anonymous">
           <img id="forest" src="img/forest.png" crossorigin="anonymous">
           <a-mixin id="text" geometry="primitive:plane; height: auto; width: auto;" material="color: green" align="center" animation__in="property: opacity; from: 0; to: 1; dur: 2000; startEvents: fadeIn" animation__out="property: opacity; from: 1; to: 0; dur: 2000; startEvents: fadeOut" bind-toggle__raycastable="scene == 'motive'"></a-mixin>
+          <a-mixin id="circles" animation__in="property: opacity; from: 0; to: 1; dur: 2000; startEvents: fadeIn" animation__out="property: opacity; from: 1; to: 0; dur: 2000; startEvents: fadeOut" bind-toggle__raycastable="scene == 'motive'"></a-mixin>
           <a-asset-item id="field-glb" src="https://cdn.glitch.com/142329d1-a4be-42da-8d96-ba8339c3860c%2Ffield.glb" crossorigin="anonymous"></a-asset-item>
 <!--            <a-asset-item id="cabin-glb" src="obj/Cabin_WebFile2.glb" crossorigin="anonymous"></a-asset-item>-->
-           <a-asset-item id="cabin-obj" src="obj/cabin.obj" crossorigin="anonymous"></a-asset-item>
-           <a-asset-item id="cabin-mtl" src="obj/cabin.mtl" crossorigin="anonymous"></a-asset-item>
-            <a-asset-item id="mushroom-gltf" src="https://cdn.glitch.com/142329d1-a4be-42da-8d96-ba8339c3860c%2FMushroom1.gltf?v=1560624630650" crossorigin="anonymous"></a-asset-item>
+           <a-asset-item id="cabin-obj" src="obj/Cabin/Cabin_6_WebFile.obj" crossorigin="anonymous"></a-asset-item>
+           <a-asset-item id="cabin-mtl" src="obj/Cabin/Cabin_6_WebFile.mtl" crossorigin="anonymous"></a-asset-item>
+            <a-asset-item id="mushroom" src="https://cdn.glitch.com/142329d1-a4be-42da-8d96-ba8339c3860c%2FMushroom1.gltf?v=1560624630650" crossorigin="anonymous"></a-asset-item>
+            <a-asset-item id="beetle" src="obj/beetle.gltf" crossorigin="anonymous"></a-asset-item>
+            <a-asset-item id="dandelion" src="obj/dandelion.gltf" crossorigin="anonymous"></a-asset-item>
+            <a-asset-item id="fang" src="obj/fang.gltf" crossorigin="anonymous"></a-asset-item>
+            <a-asset-item id="heart" src="obj/heart.gltf" crossorigin="anonymous"></a-asset-item>
+            <a-asset-item id="skull" src="obj/skull.gltf" crossorigin="anonymous"></a-asset-item>
+            <a-asset-item id="sugarcane" src="obj/sugarcane.gltf" crossorigin="anonymous"></a-asset-item>
+            <a-asset-item id="termite" src="obj/termite.gltf" crossorigin="anonymous"></a-asset-item>
+            <a-asset-item id="feather" src="obj/feather.gltf" crossorigin="anonymous"></a-asset-item>
+            <a-asset-item id="interior" src="obj/Cabin/Cabin_Interior_2.obj" crossorigin="anonymous"></a-asset-item>
             <audio id="azurehologram" src="audio/azure_bargaining_azuretrack.ogg" crossorigin="anonymous" preload="auto"></audio>
             <audio id="azuredeathhologram" src="audio/azure_bargaining_deathtrack.ogg" crossorigin="anonymous" preload="auto"></audio>
             <audio id="azureerase" src="audio/AZURETRACK_DEATH_ANGER.ogg" crossorigin="anonymous" preload="auto"></audio>
@@ -144,43 +154,52 @@
       </a-entity>
        
 <!--Motive Screen-->
-              <a-entity id="motives" position="-1.5 0 -2">
-                  <a-text id="why" value="Why did you come here?" width="12" position="0 3 -7" 
-                   mixin="text" bind__visible="scene == 'motive'"></a-text>
-                <a-text id="erase" value="To forget he ever existed" width="7" position="0 0 -5" mixin="text"              
-                    bind__visible="scene == 'motive'" motive-handler></a-text>
-                <a-text id="zombie" value="To bring him back" width="7" position="5 0 -5" mixin="text"
-                     bind__visible="scene == 'motive'" motive-handler></a-text>
-                <a-text id="hologram" value="To keep him with me" width="7" position="-5 0 -5" mixin="text"               
-                    bind__visible="scene == 'motive'" motive-handler></a-text>                  
-              </a-entity>
+      <a-entity id="motives" position="-1.5 0 -2">
+          <a-text id="why" value="Why did you come here?" width="12" position="0 3 -7" 
+           mixin="text" bind__visible="scene == 'motive'"></a-text>
+        <a-circle segments="12" position="-2.87317 -0.38126 -3.84747" motive-handler="" color="white" bind__visible="scene == 'motive'"  shader="flat" scale="0.38 0.38 0.38" mixin="circles"></a-circle>
+        <a-text id="erase" value="To forget he ever existed" width="7" position="0 0 -5" mixin="text"              
+            bind__visible="scene == 'motive'"></a-text>
+            <a-circle  segments="12" position="1.66976 -0.38126 -3.84747" motive-handler="" color="white" bind__visible="scene == 'motive'" shader="flat" scale="0.38 0.38 0.38" mixin="circles"></a-circle>
+        <a-text id="zombie" value="To bring him back" width="7" position="5 0 -5" mixin="text"
+             bind__visible="scene == 'motive'"></a-text>
+             <a-circle  segments="12" position="5.74114 -0.38126 -3.84747" motive-handler="" color="white" bind__visible="scene == 'motive'" shader="flat" scale="0.38 0.38 0.38" mixin="circles"></a-circle>
+        <a-text id="hologram" value="To keep him with me" width="7" position="-5 0 -5" mixin="text"               
+            bind__visible="scene == 'motive'"></a-text>                  
+      </a-entity>
                
 <!--Cabin Scene-->
-              <a-entity id="cabin-placeholder"
-                        geometry="primitive: box; width: 10; height:10; depth: 10"
-                        material="side: double; color: brown;"
-                        bind__visible="scene == 'cabin' || scene == 'death'"                        
+              <a-entity 
+                       scale="1.72 1.72 1.72"
+                       id="cabin-placeholder"
+                        obj-model="obj: #interior; mtl: ;"
+                        bind__visible="scene == 'cabin' || scene == 'death'"  
                         ></a-entity>
-      
+                        
         <!--    lighting -->
-                <a-entity light="type: ambient; color: #BBB" bind__visible="scene == 'cabin'"></a-entity>
-                <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1" bind__visible="scene == 'cabin'"></a-entity>
+                <a-entity light="type: ambient; color: rgb(165, 118, 30); intensity: 0.3" bind__visible="scene == 'cabin' || scene == 'death'"></a-entity>
+                <a-entity light="type: directional; color: #FFF; intensity: 0.5" position="-0.5 1 1" bind__visible="scene == 'cabin' || scene == 'death'"></a-entity>
         <!--    book    -->
               <a-entity id="book"
-                        bind-toggle__raycastable="scene == 'cabin'"
-                        bind__visible="scene == 'cabin'"
-                        geometry="primitive: box"
-                        material="color: black"
-                        position="1 1 -4"
-                        tractor-beam-book
-                        animation__open="startEvents: open"></a-entity>
+                    scale="0.14 0.36 0.43"
+                    bind-toggle__raycastable="scene == 'cabin'"
+                    bind__visible="scene == 'cabin'"
+                    geometry="primitive: box"
+                    material="color: black"
+                    position="-3 1.8 1.8"
+                    rotation="-15 17 103"       
+                    tractor-beam-book
+                    animation__open="startEvents: open"></a-entity>
+              
+
 <!--                        rotate-on-object-axis not working right now-->
         <!--    door/exit    -->
               <a-entity id="door"
                         bind-toggle__raycastable="scene == 'cabin' && bookRead"
                         bind__visible="scene == 'cabin' || scene == 'death'"
-                        position="-1 1 -4"
-                        rotation="90 0 0"
+                        position="7.8 1.9 0.32"
+                        rotation="0 0 0"
+                        scale="0.75 0.75 0.75"
                         geometry="primitive: box; width: 1; height: 5; depth: 3;"
                         material="color: blue"
                         exit-handler
@@ -196,15 +215,14 @@
                              fading></a-entity>
                        </a-entity>
                         
-                       <a-gltf-model src="#field-glb" material="shader: flat; color: #805f40" rotation="-90 0 0" position="11.17784 -1.46076 12.42866" scale="0.8 0.8 0.5" bind__visible="scene == 'forest'"></a-gltf-model>
+<!--                       <a-gltf-model src="#field-glb" material="shader: flat; color: #805f40" rotation="-90 0 0" position="11.17784 -1.46076 12.42866" scale="0.8 0.8 0.5" bind__visible="scene == 'forest'"></a-gltf-model>-->
 <!--
                         <a-gltf-model id="cabin" src="#cabin-glb" material="shader: flat; color: #777"
                           scale="0.36 0.36 0.36" position="10.44 0 17.1"
                           bind-toggle__raycastable="scene == 'forest' && itemsCollected" bind__visible="scene == 'forest'"
                           cabin-listener></a-gltf-model>
 -->
-                        <a-entity id="cabin" obj-model="obj: #cabin-obj; mtl: #cabin-mtl" bind-toggle__raycastable="scene == 'forest' && itemsCollected" bind__visible="scene == 'forest'"
-                          cabin-listener></a-entity>
+                        <a-entity id="cabin" obj-model="obj: obj/Cabin/Cabin_6_WebFile.obj; mtl: obj/Cabin/Cabin_6_WebFile.mtl" bind-toggle__raycastable="scene == 'forest' &amp;&amp; itemsCollected" bind__visible="scene == 'forest'" cabin-listener rotation="0 180 0" position="11.59 -1.4 0.12" scale="2.16 2.16 2.16"></a-entity>
                         <a-entity id="death"
                                   geometry="primitive: sphere; radius: 4"
                                   position="0 2 10"
@@ -218,39 +236,209 @@
 <!--                         height 20 feet width 60feet so 3:1 ratio  aframe units of 15*45-->  
 <!--                        sample here-->
                    
-                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-20.56 5.1 8"  rotation="0 90 0"></a-image>
-                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-20.56 5.1 -18"  rotation="0 90 0"></a-image>
-                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-20.56 5.1 40"  rotation="0 90 0"></a-image>
-                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-19.6 5.1 -20.93"  rotation="0 0 0"></a-image>
-                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="7.8 5.1 -20.93"  rotation="0 0 0"></a-image>
-                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="35 5.1 -20.93"  rotation="0 0 0"></a-image>
-                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="38 5.1 -20"  rotation="0 -90 0"></a-image>
-                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="38 5.1 10.5"  rotation="0 -90 0"></a-image>
-                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="38 5.1 37.5"  rotation="0 -90 0"></a-image>
-                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="36 5.1 38"  rotation="0 180 0"></a-image>
-                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="8 5.1 38"  rotation="0 180 0"></a-image>
-                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-21 5.1 38"  rotation="0 180 0"></a-image>
                   
+<!--                  new images-->
+                <a-entity id="alltheforestimages">
+                <a-entity  position="84.76594 -0.02642 -5.79238">
+                  <a-image  src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-16.73591 4.97952 -17.61255" rotation="0 45 0" material="" geometry="" visible=""></a-image>
+                  <a-image  src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-10.13864 5.1 -31.86124" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-16.40864 5.1 -46.74432" rotation="0 -45 0" material="" geometry="" visible=""></a-image>
+                  <a-image  src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-30.40439 5.1 -51.63012" rotation="" material="" geometry="" visible=""></a-image>
+                  <a-image  src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-49.93938 5.1 -32.33315" rotation="0 -90 0" material="" geometry="" visible=""></a-image>
+                  <a-image  src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-31.09706 5.1 -11.27322" rotation="" material="" geometry="" visible=""></a-image>
+                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-45.28984 5.1 -17.66468" rotation="0 -45 0" material="" geometry="" visible=""></a-image>
+                    <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-44.68468 4.97952 -46.4425" rotation="0 45 0" material="" geometry="" visible=""></a-image>
+                </a-entity>  
+                <a-entity position="-6.34507 -0.02642 -5.79238">
+                     <a-image  src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-16.73591 4.97952 -17.61255" rotation="0 45 0" material="" geometry="" visible=""></a-image>
+                  <a-image  src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-10.13864 5.1 -31.86124" rotation="0 90 0" material="" geometry="" visible=""></a-image>
                   
+                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-16.40864 5.1 -46.74432" rotation="0 -45 0" material="" geometry="" visible=""></a-image>
+                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-30.40439 5.1 -51.63012" rotation="" material="" geometry="" visible=""></a-image>
+                  <a-image  src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-49.93938 5.1 -32.33315" rotation="0 -90 0" material="" geometry="" visible=""></a-image>
+                  <a-image  src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-31.09706 5.1 -11.27322" rotation="" material="" geometry="" visible=""></a-image>
+                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-45.28984 5.1 -17.66468" rotation="0 -45 0" material="" geometry="" visible=""></a-image>
+                    <a-image  src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-44.68468 4.97952 -46.4425" rotation="0 45 0" material="" geometry="" visible=""></a-image>
+                </a-entity>
+                               <a-entity  position="-6.91953 -0.02642 89.44153">
+                     <a-image  src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-16.73591 4.97952 -17.61255" rotation="0 45 0" material="" geometry="" visible=""></a-image>
+                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-10.13864 5.1 -31.86124" rotation="0 90 0" material="" geometry="" visible=""></a-image>
                   
-<!--            <a-entity geometry-merger="preserveOriginal: false" material="color: #AAA">-->
+                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-16.40864 5.1 -46.74432" rotation="0 -45 0" material="" geometry="" visible=""></a-image>
+                  <a-image data-brackets-id="558" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-30.40439 5.1 -51.63012" rotation="" material="" geometry="" visible=""></a-image>
+                  <a-image data-brackets-id="559" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-49.93938 5.1 -32.33315" rotation="0 -90 0" material="" geometry="" visible=""></a-image>
+                  <a-image data-brackets-id="560" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-31.09706 5.1 -11.27322" rotation="" material="" geometry="" visible=""></a-image>
+                  <a-image data-brackets-id="561" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-45.28984 5.1 -17.66468" rotation="0 -45 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="562" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-44.68468 4.97952 -46.4425" rotation="0 45 0" material="" geometry="" visible=""></a-image>
+                </a-entity>
+                <a-entity data-brackets-id="554" position="87.27462 -0.02642 88.61245">
+                     <a-image data-brackets-id="555" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-16.73591 4.97952 -17.61255" rotation="0 45 0" material="" geometry="" visible=""></a-image>
+                  <a-image data-brackets-id="556" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-10.13864 5.1 -31.86124" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                  
+                  <a-image data-brackets-id="557" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-16.40864 5.1 -46.74432" rotation="0 -45 0" material="" geometry="" visible=""></a-image>
+                  <a-image data-brackets-id="558" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-30.40439 5.1 -51.63012" rotation="" material="" geometry="" visible=""></a-image>
+                  <a-image data-brackets-id="559" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-49.93938 5.1 -32.33315" rotation="0 -90 0" material="" geometry="" visible=""></a-image>
+                  <a-image data-brackets-id="560" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-31.09706 5.1 -11.27322" rotation="" material="" geometry="" visible=""></a-image>
+                  <a-image data-brackets-id="561" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-45.28984 5.1 -17.66468" rotation="0 -45 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="562" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-44.68468 4.97952 -46.4425" rotation="0 45 0" material="" geometry="" visible=""></a-image>
+                </a-entity>
+                                
+                <a-entity position="0 0 0">
+                  <a-image  src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="9.03079 5.1 -25.18188" rotation="" material="" geometry="" visible=""></a-image>
+                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="8 5.1 -41.62484" rotation="0 180 0" material="" geometry="" visible=""></a-image>
+                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-0.18347 5.1 -33.67116" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="17.20171 5.1 -33.09545" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                </a-entity>
+                <a-entity data-brackets-id="935" position="-43.49434 0 41.13667">
+                  <a-image data-brackets-id="936" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="9.03079 5.1 -25.18188" rotation="" material="" geometry="" visible=""></a-image>
+                  <a-image data-brackets-id="937" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="8 5.1 -41.62484" rotation="0 180 0" material="" geometry="" visible=""></a-image>
+                  <a-image data-brackets-id="938" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-0.18347 5.1 -33.67116" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                  <a-image data-brackets-id="939" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="17.20171 5.1 -33.09545" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                </a-entity>
+                <a-entity data-brackets-id="935" position="-1.20417 0 84.75183">
+                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="9.03079 5.1 -25.18188" rotation="" material="" geometry="" visible=""></a-image>
+                  <a-image  src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="8 5.1 -41.62484" rotation="0 180 0" material="" geometry="" visible=""></a-image>
+                  <a-image  src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-0.18347 5.1 -33.67116" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="17.20171 5.1 -33.09545" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                </a-entity>
+                <a-entity data-brackets-id="935" position="42.70014 0 41.86742">
+                  <a-image  src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="9.03079 5.1 -25.18188" rotation="" material="" geometry="" visible=""></a-image>
+                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="8 5.1 -41.62484" rotation="0 180 0" material="" geometry="" visible=""></a-image>
+                  <a-image  src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-0.18347 5.1 -33.67116" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                  <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="17.20171 5.1 -33.09545" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                </a-entity>
+                <a-entity position="-96 0 -5">
+                     <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15 5.1 -61.06667" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15 5 -44.4907" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1070" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="14.92331 5 -27.25043" rotation="0 -90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1071" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15.04082 5.1 -10.15618" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1073" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15.33857 4.97952 7.38899" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                </a-entity>
+                <a-entity data-brackets-id="1648" position="82 0 -5">
+                     <a-image data-brackets-id="1649" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15 5.1 -61.06667" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1650" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15 5 -44.4907" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1651" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="14.92331 5 -27.25043" rotation="0 -90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1652" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15.04082 5.1 -10.15618" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1653" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15.33857 4.97952 7.38899" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                </a-entity>
+                <a-entity data-brackets-id="1648" position="82 0 73">
+                     <a-image data-brackets-id="1649" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15 5.1 -61.06667" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1650" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15 5 -44.4907" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1651" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="14.92331 5 -27.25043" rotation="0 -90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1652" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15.04082 5.1 -10.15618" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1653" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15.33857 4.97952 7.38899" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                </a-entity>
+                <a-entity data-brackets-id="1648" position="-96 0.5 73">
+                     <a-image data-brackets-id="1649" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15 5.1 -61.06667" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1650" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15 5 -44.4907" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1651" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="14.92331 5 -27.25043" rotation="0 -90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1652" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15.04082 5.1 -10.15618" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1653" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15.33857 4.97952 7.38899" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                </a-entity>
+                <a-entity data-brackets-id="1648" position="81 0 -58" rotation="0 90 0">
+                     <a-image data-brackets-id="1649" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15 5.1 -61.06667" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1650" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15 5 -44.4907" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1651" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="14.92331 5 -27.25043" rotation="0 -90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1652" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15.04082 5.1 -10.15618" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1653" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15.33857 4.97952 7.38899" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                </a-entity>
+                 <a-entity data-brackets-id="1648" position="-4 0 -58" rotation="0 90 0">
+                     <a-image data-brackets-id="1649" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15 5.1 -61.06667" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1650" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15 5 -44.4907" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1651" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="14.92331 5 -27.25043" rotation="0 -90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1652" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15.04082 5.1 -10.15618" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1653" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15.33857 4.97952 7.38899" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                </a-entity>
+                 <a-entity data-brackets-id="1648" position="-6 0 112" rotation="0 90 0">
+                     <a-image data-brackets-id="1649" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15 5.1 -61.06667" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1650" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15 5 -44.4907" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1651" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="14.92331 5 -27.25043" rotation="0 -90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1652" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15.04082 5.1 -10.15618" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1653" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15.33857 4.97952 7.38899" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                </a-entity>
+                 <a-entity data-brackets-id="1648" position="78 0 112" rotation="0 90 0">
+                     <a-image data-brackets-id="1649" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15 5.1 -61.06667" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1650" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15 5 -44.4907" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1651" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="14.92331 5 -27.25043" rotation="0 -90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1652" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15.04082 5.1 -10.15618" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                    <a-image data-brackets-id="1653" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="15.33857 4.97952 7.38899" rotation="0 90 0" material="" geometry="" visible=""></a-image>
+                </a-entity>
+                   <a-image data-brackets-id="2130" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-75.8381 5 91.70671" rotation="0 -45 0" material="" geometry="" visible=""></a-image>
+                   <a-image data-brackets-id="2130" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="93.39242 5 91.70671" rotation="0 45 0" material="" geometry="" visible=""></a-image>
+                   <a-image data-brackets-id="2130" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="93.39242 5 -71.49542" rotation="0 -45 0" material="" geometry="" visible=""></a-image>
+                   <a-image data-brackets-id="2130" src="#forest" height="27" width="45" scale="0.4 0.5 0.1" bind__visible="scene == 'forest'" position="-77.21892 5 -67.47687" rotation="0 45 0" material="" geometry="" visible=""></a-image>
+        
+                </a-entity>  
            
+                <a-entity id="modeled trees"> 
+                      <a-entity  mixin="bigtree-mixin" position="2.22703 2.16649 -12.94695" visible="" bind__visible="scene == 'forest'" rotation="0 -26.78 0"></a-entity>
+                      <a-entity  mixin="smalltree-mixin" position="-12.69587 5 -11.17705" visible="" bind__visible="scene == 'forest'"></a-entity>
+                      <a-entity mixin="smalltree-mixin" position="1.26222 7.00036 9.3" visible="" bind__visible="scene == 'forest'" rotation="-6.55 -31.24 -1.79" scale="25 30 25"></a-entity>
+                      <a-entity  mixin="smalltree-mixin" position="21.37328 4.17415 -4.96882" scale="25 19.21 25" visible="" bind__visible="scene == 'forest'" rotation="0 20 0"></a-entity>
+                      <a-entity  mixin="smalltree-mixin" position="29.67459 5 -11.73679" visible="" bind__visible="scene == 'forest'"></a-entity>
+                      <a-entity mixin="smalltree-mixin" position="32.12954 5 3.3605" visible="" bind__visible="scene == 'forest'"></a-entity>
+                      <a-entity data-brackets-id="1207" mixin="smalltree-mixin" position="-10.20289 5 24.5869" visible="" bind__visible="scene == 'forest'" rotation="0 -29.42 0"></a-entity>
+                      <a-entity data-brackets-id="1208" mixin="smalltree-mixin" position="-1.68385 5.71898 29.7632" visible="" bind__visible="scene == 'forest'" rotation="0 20 0"></a-entity>
+                      <a-entity data-brackets-id="1204" mixin="bigtree-mixin" position="29.26874 2.16649 28.66455" visible="" bind__visible="scene == 'forest'" rotation="0 -73.5 0"></a-entity>
+                      <a-entity data-brackets-id="1209" mixin="smalltree-mixin" position="16.65687 5 22.73245" visible="" bind__visible="scene == 'forest'" rotation="0 59.00000000000001 0"></a-entity>
+                      <a-entity data-brackets-id="1212" mixin="smalltree-mixin" position="-12.83972 4.17415 5.14539" scale="25 19.21 25" visible="" bind__visible="scene == 'forest'" rotation="0 50 0"></a-entity>
+                      <a-entity data-brackets-id="1209" mixin="smalltree-mixin" position="16.65687 5 22.73245" visible="" bind__visible="scene == 'forest'" rotation="0 59.00000000000001 0"></a-entity>
+
+
+    <!--                  second surrounding layer-->
+                      <a-entity  mixin="smalltree-mixin" position="-37.37594 5 -14.322" visible="" bind__visible="scene == 'forest'" rotation="0 20 0"></a-entity>
+                     <a-entity  mixin="smalltree-mixin" position="-27.15862 5 -4.5899" visible="" bind__visible="scene == 'forest'" rotation="0 50 0"></a-entity>
+                      <a-entity  mixin="smalltree-mixin" position="-34.74762 5 28.72279" visible="" bind__visible="scene == 'forest'" rotation="0 -70 0"></a-entity>
+                      <a-entity  mixin="smalltree-mixin" position="-11.93652 4.17415 48.11479" scale="25 19.21 25" visible="" bind__visible="scene == 'forest'" rotation="0 20 0"></a-entity>
+                      <a-entity  mixin="smalltree-mixin" position="30.04578 4.17415 45.59913" scale="25 19.21 25" visible="" bind__visible="scene == 'forest'" rotation="0 10 0"></a-entity>
+                      <a-entity mixin="smalltree-mixin" position="20.28892 5 55.68693" visible="" bind__visible="scene == 'forest'" rotation="0 -70 0"></a-entity>
+                      <a-entity  mixin="smalltree-mixin" position="55.99157 5 18.3091" visible="" bind__visible="scene == 'forest'" rotation="0 -70 0"></a-entity>
+                      <a-entity mixin="bigtree-mixin" position="-2.63914 2.16649 88.58347" visible="" bind__visible="scene == 'forest'" rotation="0 200 0"></a-entity>
+                      <a-entity mixin="bigtree-mixin" position="69.36293 2.16649 -0.70346" visible="" bind__visible="scene == 'forest'" rotation="0 10 0"></a-entity>
+                      <a-entity mixin="bigtree-mixin" position="15.70312 2.16649 -52.03083" visible="" bind__visible="scene == 'forest'" rotation="0 10 0"></a-entity>
+                      <a-entity  mixin="bigtree-mixin" position="-76.00723 2.16649 -46.16414" visible="" bind__visible="scene == 'forest'" rotation="0 35 0"></a-entity>
+                      <a-entity mixin="smalltree-mixin" position="-57.44225 5 9.46154" visible="" bind__visible="scene == 'forest'" rotation="0 45 0"></a-entity>
+                      <a-entity mixin="smalltree-mixin" position="-76.82758 5 36.48794" visible="" bind__visible="scene == 'forest'" rotation="0 14.999999999999998 0"></a-entity>
+                      <a-entity mixin="smalltree-mixin" position="-71.42698 5 86.56216" visible="" bind__visible="scene == 'forest'" rotation="0 75 0"></a-entity>
+                      <a-entity mixin="smalltree-mixin" position="-26.29765 5 81.04894" visible="" bind__visible="scene == 'forest'" rotation="0 -14.999999999999998 0"></a-entity>
+                      <a-entity mixin="smalltree-mixin" position="2.12251 5 67.4748" visible="" bind__visible="scene == 'forest'" rotation="0 -14.999999999999998 0"></a-entity>
+                      <a-entity  mixin="smalltree-mixin" position="-59.22287 5 41.13395" visible="" bind__visible="scene == 'forest'" rotation="0 25 0"></a-entity>
+                      <a-entity  mixin="smalltree-mixin" position="91.34095 5 37.10881" visible="" bind__visible="scene == 'forest'" rotation="0 45 0"></a-entity>
+                      <a-entity  mixin="smalltree-mixin" position="70.569 5 84.3401" visible="" bind__visible="scene == 'forest'" rotation="0 14.999999999999998 0"></a-entity>
+                      <a-entity  mixin="smalltree-mixin" position="89.13793 5 -27.60067" visible="" bind__visible="scene == 'forest'" rotation="0 125.00000000000001 0"></a-entity>
+                      <a-entity  mixin="smalltree-mixin" position="78.25177 5 -59.16354" visible="" bind__visible="scene == 'forest'" rotation="0 125.00000000000001 0"></a-entity>
+                      <a-entity  mixin="smalltree-mixin" position="-0.2646 5 -59.16354" visible="" bind__visible="scene == 'forest'" rotation="0 125.00000000000001 0"></a-entity>
+                      <a-entity  mixin="smalltree-mixin" position="-36.8825 5 -63.78438" visible="" bind__visible="scene == 'forest'" rotation="0 225 0"></a-entity>
+                      <a-entity mixin="smalltree-mixin" position="-64.83771 5 -59.31472" visible="" bind__visible="scene == 'forest'" rotation="0 65 0"></a-entity>
+                      <a-entity mixin="smalltree-mixin" position="-64.83771 5 8.01182" visible="" bind__visible="scene == 'forest'" rotation="0 35 0"></a-entity>
+                      <a-entity mixin="smalltree-mixin" position="75.19344 5 15.10375" visible="" bind__visible="scene == 'forest'" rotation="0 35 0"></a-entity>
+                      <a-entity mixin="smalltree-mixin" position="73.25554 5 31.77485" visible="" bind__visible="scene == 'forest'" rotation="0 14.999999999999998 0"></a-entity>
+                      <a-entity mixin="smalltree-mixin" position="85.91189 5 1.68747" visible="" bind__visible="scene == 'forest'" rotation="0 345 0"></a-entity>
+                      <a-entity mixin="smalltree-mixin" position="81.88757 5 58.97471" visible="" bind__visible="scene == 'forest'" rotation="0 205 0"></a-entity>
+                      <a-entity  mixin="smalltree-mixin" position="27.41264 5 76.46276" visible="" bind__visible="scene == 'forest'" rotation="0 205 0"></a-entity>
+                      <a-entity  mixin="smalltree-mixin" position="-69.00422 5 66.74033" visible="" bind__visible="scene == 'forest'" rotation="0 75 0"></a-entity>
+                      <a-entity mixin="smalltree-mixin" position="-60.57427 5 -2.14642" visible="" bind__visible="scene == 'forest'" rotation="0 25 0"></a-entity>
+                         <a-entity data-brackets-id="1372" mixin="smalltree-mixin" position="-70.58929 5 -18.11758" visible="" bind__visible="scene == 'forest'" rotation="0 185 0"></a-entity>
+                         <a-entity data-brackets-id="1372" mixin="smalltree-mixin" position="47.68936 5 -66.13553" visible="" bind__visible="scene == 'forest'" rotation="0 185 0"></a-entity>
+                         <a-entity data-brackets-id="1372" mixin="smalltree-mixin" position="-12.18482 5 -35.56726" visible="" bind__visible="scene == 'forest'" rotation="0 185 0"></a-entity>
+                         <a-entity data-brackets-id="1372" mixin="smalltree-mixin" position="30.16961 5 -35.56726" visible="" bind__visible="scene == 'forest'" rotation="0 185 0"></a-entity>
+                         <a-entity data-brackets-id="1372" mixin="smalltree-mixin" position="50.11534 5 -6.14562" visible="" bind__visible="scene == 'forest'" rotation="0 185 0"></a-entity>
+                         <a-entity data-brackets-id="1371" mixin="bigtree-mixin" position="-59.06185 2.16649 24.01097" visible="" bind__visible="scene == 'forest'" rotation="0 -26.78 0"></a-entity>
+                  </a-entity>
                   
-                  <a-entity  mixin="bigtree-mixin" position="2.22703 2.16649 -12.94695" visible="" bind__visible="scene == 'forest'" rotation="0 -26.78 0"></a-entity>
-                  <a-entity  mixin="smalltree-mixin" position="-12.69587 5 -11.17705" visible="" bind__visible="scene == 'forest'"></a-entity>
-                  <a-entity mixin="smalltree-mixin" position="1.26222 7.00036 -1.71874" visible="" bind__visible="scene == 'forest'" rotation="-6.55 -31.24 -1.79" scale="25 30 25"></a-entity>
-                  <a-entity  mixin="smalltree-mixin" position="21.37328 4.17415 -4.96882" scale="25 19.21 25" visible="" bind__visible="scene == 'forest'" rotation="0 20 0"></a-entity>
-                  <a-entity  mixin="smalltree-mixin" position="29.67459 5 -11.73679" visible="" bind__visible="scene == 'forest'"></a-entity>
-                  <a-entity mixin="smalltree-mixin" position="32.12954 5 3.3605" visible="" bind__visible="scene == 'forest'"></a-entity>
-                  <a-entity data-brackets-id="1207" mixin="smalltree-mixin" position="-10.20289 5 24.5869" visible="" bind__visible="scene == 'forest'" rotation="0 -29.42 0"></a-entity>
-                  <a-entity data-brackets-id="1208" mixin="smalltree-mixin" position="-1.68385 5.71898 29.7632" visible="" bind__visible="scene == 'forest'" rotation="0 20 0"></a-entity>
-                  <a-entity data-brackets-id="1204" mixin="bigtree-mixin" position="29.26874 2.16649 28.66455" visible="" bind__visible="scene == 'forest'" rotation="0 -73.5 0"></a-entity>
-                  <a-entity data-brackets-id="1209" mixin="smalltree-mixin" position="16.65687 5 22.73245" visible="" bind__visible="scene == 'forest'" rotation="0 59.00000000000001 0"></a-entity>
-                  <a-entity data-brackets-id="1212" mixin="smalltree-mixin" position="-12.83972 4.17415 5.14539" scale="25 19.21 25" visible="" bind__visible="scene == 'forest'" rotation="0 50 0"></a-entity>
-                  <a-entity data-brackets-id="1209" mixin="smalltree-mixin" position="16.65687 5 22.73245" visible="" bind__visible="scene == 'forest'" rotation="0 59.00000000000001 0"></a-entity>
-    
-                   
-                    <a-entity ground="active: true; groundYScale: 3.23; groundXZScale: 1.56; groundTexture: walkernoise; groundColor: #415434; groundColor2: #59484b" visible="" position="0 -1.45 0" bind__visible="scene == 'forest'"></a-entity>
+                  <a-entity id="collectable-objects">
+                      <a-gltf-model id="beetle-entity" mixin="gameObject" src="#beetle" position="-33 0 26" scale="0.75 .75 .75" rotation="0 -45 0" ></a-gltf-model>
+                      <a-gltf-model id="dandelion-entity" mixin="gameObject" src="#dandelion" position="-22 -1.24 0" scale="0.664 0.334 0.664"></a-gltf-model>
+                      <a-gltf-model id="fang-entity" mixin="gameObject" src="#fang" position="73 -1 -10" scale="0.3 0.3 0.3"></a-gltf-model>
+                      <a-gltf-model id="feather-entity" mixin="gameObject" src="#feather" position="-13.8 .57 -10.77" rotation="0 -50 0" ></a-gltf-model>
+                      <a-gltf-model id="heart-entity" mixin="gameObject" src="#heart" position="-3 10.32 87.27"></a-gltf-model>
+                      <a-gltf-model id="skull-entity" mixin="gameObject" src="#skull" position="-75.7 0.57 84.35" rotation="-76.7 0 0" scale="4.052 4.052 4.052"></a-gltf-model>
+                      <a-gltf-model id="sugarcane" mixin="gameObject" src="#sugarcane" position="-11.5 -4.6 -63.08" scale="5.9 5.9 5.9"></a-gltf-model>
+                      <a-gltf-model id="termite-entity" mixin="gameObject" src="#termite" position="-78 -1.68 48" ></a-gltf-model>
+                      <a-gltf-model id="mushroom-entity" mixin="gameObject" src="#mushroom" position="20 0 20"></a-gltf-model>
+                  </a-entity>
+                  
+                <a-entity ground="active: true; groundYScale: 3.23; groundXZScale: 1.56; groundTexture: walkernoise; groundColor: #415434; groundColor2: #59484b" visible="" position="0 -1.45 0" bind__visible="scene == 'forest'"></a-entity>
 
 <!--
                         
@@ -295,14 +483,16 @@
 -->
 
 <!--Death Scene-->
+<!--
        <a-entity id="death-lights">
             <a-entity light="type: ambient; color: #BBB" bind__visible="scene == 'death'"></a-entity>
             <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1" bind__visible="scene == 'death'"></a-entity>  
        </a-entity>
+-->
        
         <a-entity id="death-2"
                     geometry="primitive: sphere; radius: 1"
-                    position="0 2 5"
+                    position="0 2 4"
                     material="color: red"
                     bind__visible="scene == 'death'"
                     bind-toggle__raycastable="scene == 'death'"
@@ -334,6 +524,11 @@
                    geometry="primitive: circle; radius: 0.02; thetaStart: -90; thetaLength: 1"
                    position="0 0 -0.9"
                    material="color: white; shader: flat"></a-entity>
+          <a-entity id="inprogress"
+                    text="value: **** IN PROGRESS **** \n  Use #'s 1-6 to navigate scenes. \n ; 
+                    align: center; width: 5; color: white"
+                    position="0 0 -3"></a-entity>
+                    
       </a-entity>
     </a-scene>
   </body>

@@ -1,4 +1,4 @@
-# Blender MTL File: 'Cabin_6_200111.blend'
+# Blender MTL File: 'Cabin_6_200112.blend'
 # Material Count: 5
 
 newmtl Basic_glass
@@ -20,7 +20,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd M:\\BlenderKit\\Materials\\Roof Plastic\\Roof Plastic_diffuse.png
+map_Kd .\Metal_Roofing_base.jpg
 
 newmtl Wood_02
 Ns 225.000000
@@ -31,7 +31,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd M:\\BlenderKit\\Materials\\Wood 02\\Wood 02_diffuse.png
+map_Kd .\wood_planks_Base.jpg
 
 newmtl Wood_Old_01
 Ns 236.028592
@@ -42,6 +42,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd -s 0.250000 0.750000 1.000000 .\Old__Wood 2.jpg
 
 newmtl Wood_Piant_Old
 Ns 225.000000
@@ -52,4 +53,4 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd M:\\BlenderKit\\Materials\\WoodPaintOld\\WoodPaintOld_diffuse.png
+map_Kd .\Old__Wood 1.jpg

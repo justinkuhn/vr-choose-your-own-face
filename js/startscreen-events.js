@@ -20,7 +20,6 @@ AFRAME.registerComponent('cursor-listener', {
                 }, 2000);     
                 }, 2000);
             });
-           
           }
         });
 
@@ -87,8 +86,8 @@ AFRAME.registerComponent('ambisonics', {
 
           // This is necessary to activate audio playback out of autoplay block.
          document.getElementById('startButton').addEventListener('click',() => {
-            audioContext.resume();
-            audioElement.play();
+           // audioContext.resume();
+           // audioElement.play();
           });
         //debug
         });
